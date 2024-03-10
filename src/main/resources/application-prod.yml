@@ -4,3 +4,15 @@ spring:
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
     name: spring-blog
+
+  jpa:
+      hibernate:
+          ddl-auto: update
+      show-sql: true
+      properties:
+          hibernate:
+              dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  sql:
+    init:
+      mode: always
