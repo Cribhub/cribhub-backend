@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cribhub
+    username: maloha
+    password: Cribhubpassord251!
+
+  sql:
+    init:
+      mode: always
