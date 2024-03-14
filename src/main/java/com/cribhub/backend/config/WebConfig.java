@@ -15,7 +15,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")  // Allowed endpoint routes
-                        .allowedOrigins("http://localhost:3000", "https://cribhub-frontend-staging-74d77d3d4d4c.herokuapp.com") // Allowed origins
+                        .allowedOrigins("http://localhost:5173", "https://cribhub-frontend-staging-a24bedb682a6.herokuapp.com/") // Allowed origins
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed HTTP methods
                         .allowedHeaders("*") // Allowed headers
                         .allowCredentials(true);
