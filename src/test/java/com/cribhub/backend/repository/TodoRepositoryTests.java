@@ -18,7 +18,7 @@ public class TodoRepositoryTests {
 
     @Test
     void shouldReturnAllTodos() {
-        long count = StreamSupport.stream(todos.findAll().spliterator(), false).count();
+        long count = todos.findAll().size();
         assertEquals(1, count);
     }
 }
