@@ -8,7 +8,6 @@ import org.springframework.lang.NonNull;
 
 @Configuration
 public class WebConfig {
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
