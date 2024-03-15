@@ -11,6 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 public class TodoRepositoryTests {
+
+    static {
+        if (System.getenv("HEROKU_TEST_RUN_BRANCH") != null) {
+            System.setProperty("TESTCONTAINERS_RYUK_DISABLED", "true");
+            System.setProperty("DOCKER_HOST", "tcp://localhost:2375");
+        }
+    }
+
     @Autowired
     TodoRepository todos;
 

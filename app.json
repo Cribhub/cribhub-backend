@@ -1,0 +1,18 @@
+{
+  "environments": {
+    "test": {
+      "addons":[
+        "heroku-postgresql",
+        "docker"
+      ],
+      "env": {
+        "HEROKU_TEST_RUN_BRANCH": {
+          "required": true
+        },
+        "HEROKU_TEST_RUN_COMMIT_VERSION": {
+          "required": true
+        }
+      }
+    }
+  }
+}
