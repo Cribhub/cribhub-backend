@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cribhub
-    username: maloha
-    password: Cribhubpassord251!
+    url: jdbc:postgresql://db:5432/cribhub
+    username: postgres
+    password: password
 
   sql:
     init:
