@@ -17,3 +17,6 @@ info:
 spring:
   profiles:
     active: dev
+  jpa:
+    hibernate:
+      ddl-auto: create
