@@ -9,4 +9,6 @@ public interface ITodoService {
     public TodoItem addTodo(TodoItem todoItem);
 
     public List<TodoItem> getAllTodos();
+
+    public boolean deleteById(long id);
 }

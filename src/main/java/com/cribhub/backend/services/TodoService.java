@@ -28,4 +28,11 @@ public class TodoService implements ITodoService {
     public List<TodoItem> getAllTodos() {
         return todoRepository.findAll();
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        var todo = todoRepository.findById(id);
+        todo.ifPresent(todoRepository::delete);
+        return todo.isPresent();
+    }
 }

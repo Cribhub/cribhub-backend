@@ -29,4 +29,13 @@ public class TodoController {
     public ResponseEntity<Iterable<TodoItem>> getAllTodos() {
         return new ResponseEntity<>(todoService.getAllTodos(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/todo/{id}")
+    public ResponseEntity<Void> deleteTodoById(@PathVariable long id) {
+        var success = todoService.deleteById(id);
+        if (!success) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
