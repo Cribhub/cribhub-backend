@@ -14,9 +14,3 @@ info:
     description: Shared accommodation management system
     author: maloha
     version: '@project.version@'
-spring:
-  profiles:
-    active: dev
-  jpa:
-    hibernate:
-      ddl-auto: create
