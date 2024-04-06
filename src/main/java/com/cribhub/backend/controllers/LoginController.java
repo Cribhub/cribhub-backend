@@ -52,7 +52,7 @@ public class LoginController {
 
     @Getter
     @Setter
-    static class LoginRequest {
+    public static class LoginRequest {
         private String email;
         private String password;
 
