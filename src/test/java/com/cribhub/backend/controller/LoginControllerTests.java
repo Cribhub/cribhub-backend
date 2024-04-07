@@ -30,8 +30,7 @@ public class LoginControllerTests {
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
-        loginController = new LoginController(authenticationManager);
-        loginController.setJwtTokenUtil(jwtTokenUtil);
+        loginController = new LoginController(authenticationManager, jwtTokenUtil);
     }
 
     @Test
