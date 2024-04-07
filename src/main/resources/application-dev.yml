@@ -3,8 +3,6 @@ spring:
     url: jdbc:postgresql://db:5432/cribhub
     username: postgres
     password: password
-  profiles:
-    active: dev
   jpa:
     hibernate:
       ddl-auto: create
