@@ -38,8 +38,7 @@ public class CustomerControllerTests {
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
-        customerController = new CustomerController(customerService, cribService);
-        customerController.setPasswordEncoder(passwordEncoder);
+        customerController = new CustomerController(customerService, cribService, passwordEncoder);
     }
 
     @Test

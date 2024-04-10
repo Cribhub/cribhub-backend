@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final PasswordEncoder passwordEncoder;
+    private final CribService cribService;
 
-    @Autowired
-    @Setter
-    private PasswordEncoder passwordEncoder;
 
-    public CustomerController(CustomerServiceImpl customerService, CribService cribService) {
+    public CustomerController(CustomerServiceImpl customerService, CribService cribService, PasswordEncoder passwordEncoder) {
         this.customerService = customerService;
         this.cribService = cribService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/customer")
@@ -49,8 +49,6 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
-
-    private final CribService cribService;
 
     @PostMapping("customer/{customerId}/join/{cribId}")
     public ResponseEntity<Crib> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId) {

@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer existingCustomer = customerRepository.findById(id).orElse(null);
         if (existingCustomer != null) {
             existingCustomer.setEmail(customer.getEmail());
-            // Update other properties as needed
+            // Update the other properties as needed
             return customerRepository.save(existingCustomer);
         }
         return null;
