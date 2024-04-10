@@ -4,7 +4,9 @@ import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,13 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CribRepository cribRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CribRepository cribRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
+        this.cribRepository = cribRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -81,6 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public void deleteCustomer(Long id) throws CustomerNotFoundException {
         //Check if the user exists
         Optional<Customer> customer = customerRepository.findById(id);
@@ -88,6 +93,13 @@ public class CustomerServiceImpl implements CustomerService {
             throw new CustomerNotFoundException(id);
         }
 
+        //If the user belongs to a crib, remove the user
+        Customer customerToDelete = customer.get();
+        if (customerToDelete.getCrib() != null) {
+            cribRepository.findById(customerToDelete.getCrib().getCribId()).ifPresent(crib -> crib.getCribMembers().remove(customerToDelete));
+        }
+
+        //Delete the user
         customerRepository.deleteById(id);
     }
 }

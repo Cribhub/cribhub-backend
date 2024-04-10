@@ -1,5 +1,6 @@
 package com.cribhub.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -20,12 +21,15 @@ public class Crib {
     private String name;
 
     @OneToMany(mappedBy = "crib")
+    @JsonIgnore
     private List<Customer> cribMembers;
 
     @OneToMany(mappedBy = "crib")
+    @JsonIgnore
     private List<ShoppingListItem> shoppingList;
 
     @OneToMany(mappedBy = "crib")
+    @JsonIgnore
     private List<Task> tasks;
 
     public Crib() {

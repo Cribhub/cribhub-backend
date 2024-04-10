@@ -26,7 +26,7 @@ public class ShoppingListItem {
 
     public ShoppingListItem(){}
 
-    public ShoppingListItem(String description, String name, Customer customer, Crib crib){
+    public ShoppingListItem(String name, String description, Customer customer, Crib crib) {
         this.name = name;
         this.description = description;
         this.customer = customer;

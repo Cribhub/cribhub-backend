@@ -1,5 +1,6 @@
 package com.cribhub.backend.services;
 
+import com.cribhub.backend.controllers.exceptions.CribNotFoundException;
 import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
@@ -11,5 +12,6 @@ public interface CustomerService {
     Customer getCustomerById(Long id) throws CustomerNotFoundException;
     Customer createCustomer(Customer customer) throws EmailAlreadyInUseException, UsernameAlreadyTakenException;
     Customer updateCustomer(Long id, Customer customer) throws CustomerNotFoundException;
-    void deleteCustomer(Long id) throws CustomerNotFoundException;
+
+    void deleteCustomer(Long id) throws CustomerNotFoundException, CribNotFoundException;
 }

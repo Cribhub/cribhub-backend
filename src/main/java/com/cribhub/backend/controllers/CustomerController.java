@@ -2,6 +2,7 @@ package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.DTO.CustomerDTO;
 import com.cribhub.backend.DTO.CustomerUpdateDTO;
+import com.cribhub.backend.controllers.exceptions.CribNotFoundException;
 import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
@@ -57,7 +58,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("customer/{id}")
-    public ResponseEntity<String> deleteCustomer( @PathVariable long id) throws CustomerNotFoundException {
+    public ResponseEntity<String> deleteCustomer(@PathVariable long id) throws CustomerNotFoundException, CribNotFoundException {
         customerService.deleteCustomer(id);
 
         log.warn("Customer with id {} deleted", id);

@@ -48,6 +48,7 @@ public class Customer {
 
     public void setCrib(Crib crib) {
         this.crib = crib;
-        crib.getCribMembers().add(this);
+        if (crib != null && !crib.getCribMembers().contains(this))
+            crib.getCribMembers().add(this);
     }
 }

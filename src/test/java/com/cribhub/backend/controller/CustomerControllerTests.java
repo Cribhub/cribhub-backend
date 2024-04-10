@@ -1,6 +1,8 @@
 package com.cribhub.backend.controller;
 
+import com.cribhub.backend.DTO.CustomerDTO;
 import com.cribhub.backend.controllers.CustomerController;
+import com.cribhub.backend.controllers.exceptions.CribNotFoundException;
 import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
@@ -15,9 +17,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.cribhub.backend.DTO.CustomerDTO;
-import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -67,7 +68,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void deleteCustomerTest() throws CustomerNotFoundException {
+    public void deleteCustomerTest() throws CustomerNotFoundException, CribNotFoundException {
         doNothing().when(customerService).deleteCustomer(1L);
 
         ResponseEntity<String> result = customerController.deleteCustomer(1L);

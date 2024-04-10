@@ -46,7 +46,7 @@ class CustomUserDetailsServiceTest {
     void loadUserByUsername_UserDoesNotExist() {
         // Arrange
         String email = "test@example.com";
-        when(customerRepository.findByEmail(email)).thenReturn(null);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(UsernameNotFoundException.class, () -> customUserDetailsService.loadUserByUsername(email));

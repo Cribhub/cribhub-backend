@@ -1,19 +1,21 @@
 package com.cribhub.backend.integration;
 
 import com.cribhub.backend.DTO.CustomerDTO;
+import com.cribhub.backend.controllers.exceptions.CribNotFoundException;
+import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.services.CribService;
 import com.cribhub.backend.services.CustomerService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -41,19 +43,34 @@ public class CustomerControllerIntegrationTest {
     @BeforeEach
     public void setup() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         testCustomer = new Customer();
+        testCustomer.setUserName("TestCustomer");
+        testCustomer.setEmail("test@testmail.com");
         testCustomer.setPassword(passwordEncoder.encode("password"));
         customerService.createCustomer(testCustomer);
 
         testCrib = new Crib();
+        testCrib.setName("TestCrib");
         cribService.saveCrib(testCrib);
+    }
+
+    @AfterEach
+    public void teardown() throws CribNotFoundException, CustomerNotFoundException {
+        customerService.deleteCustomer(testCustomer.getUserId());
+        cribService.deleteCrib(testCrib.getCribId());
     }
 
     @Test
     public void testCreateCustomer() {
         Customer newCustomer = new Customer();
+        newCustomer.setUserName("NewCustomer");
+        newCustomer.setEmail("new@email.com");
         newCustomer.setPassword("password");
 
-        ResponseEntity<CustomerDTO> response = restTemplate.postForEntity("/customer", newCustomer, CustomerDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Customer> request = new HttpEntity<>(newCustomer, headers);
+
+        ResponseEntity<CustomerDTO> response = restTemplate.exchange("/customer", HttpMethod.POST, request, CustomerDTO.class);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
