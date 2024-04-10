@@ -2,7 +2,7 @@ package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.dto.TaskDTO;
-import com.cribhub.backend.services.TaskService;
+import com.cribhub.backend.services.intefaces.TaskService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

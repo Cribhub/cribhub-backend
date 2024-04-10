@@ -1,4 +1,4 @@
-package com.cribhub.backend.services;
+package com.cribhub.backend.services.intefaces;
 
 import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;

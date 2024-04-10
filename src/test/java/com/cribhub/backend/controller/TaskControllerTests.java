@@ -3,7 +3,7 @@ package com.cribhub.backend.controller;
 import com.cribhub.backend.controllers.TaskController;
 import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.dto.TaskDTO;
-import com.cribhub.backend.services.TaskService;
+import com.cribhub.backend.services.intefaces.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -3,7 +3,7 @@ package com.cribhub.backend.controller;
 import com.cribhub.backend.controllers.CribController;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.dto.CribDTO;
-import com.cribhub.backend.services.CribService;
+import com.cribhub.backend.services.intefaces.CribService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
