@@ -33,7 +33,7 @@ public class ShoppingListController {
             return ResponseEntity.notFound().build();
         }
 
-        log.info("Shopping list item retrieved: id {} {}", id, shoppingListOptional.get().getShoppingName());
+        log.info("Shopping list item retrieved: id-{} name-{}", id, shoppingListOptional.get().getShoppingName());
         return ResponseEntity.ok(shoppingListOptional.get());
     }
 
@@ -47,7 +47,7 @@ public class ShoppingListController {
             return ResponseEntity.internalServerError().build();
         }
 
-        log.info("Shopping list item created: id {} {}", savedShoppingList.get().getShoppingListId(), savedShoppingList.get().getShoppingName());
+        log.info("Shopping list item created: id-{} name-{}", savedShoppingList.get().getShoppingListId(), savedShoppingList.get().getShoppingName());
         return ResponseEntity.ok(savedShoppingList.get());
     }
 
@@ -68,7 +68,7 @@ public class ShoppingListController {
         // Update other fields as necessary
         ShoppingList updatedShoppingList = shoppingListService.createOrUpdateShoppingList(existingList);
 
-        log.info("Shopping list item updated: id {} {}", id, updatedShoppingList.getShoppingName());
+        log.info("Shopping list item updated: id-{} name-{}", id, updatedShoppingList.getShoppingName());
         return ResponseEntity.ok(updatedShoppingList);
     }
 

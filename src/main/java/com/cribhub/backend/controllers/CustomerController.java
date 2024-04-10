@@ -36,7 +36,7 @@ public class CustomerController {
         customer.setPassword(hashedPassword);
         customerService.createCustomer(customer);
 
-        log.info("Customer created: {} {} {}", customer.getUserId(), customer.getUserName(), customer.getEmail());
+        log.info("Customer created: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(), customer.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body(CustomerDTO.ConvertToDTO(customer));
     }
 
@@ -44,7 +44,7 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable long id) {
         Customer customer = customerService.getCustomerById(id);
 
-        log.info("Customer retrieved: {} {} {}", customer.getUserId(), customer.getUserName(), customer.getEmail());
+        log.info("Customer retrieved: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(), customer.getEmail());
         return ResponseEntity.ok(CustomerDTO.ConvertToDTO(customer));
     }
 
