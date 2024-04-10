@@ -1,6 +1,5 @@
 package com.cribhub.backend.services;
 
-import com.cribhub.backend.controllers.exceptions.CribNotFoundException;
 import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -26,9 +24,6 @@ public class CustomerServiceTests {
 
     @Mock
     CustomerRepository customerRepository;
-
-    @Mock
-    PasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void init() {
@@ -82,7 +77,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void updateNonExistentCustomerTest() throws CustomerNotFoundException {
+    public void updateNonExistentCustomerTest() {
         Customer updatedCustomer = new Customer();
         updatedCustomer.setEmail("updated@example.com");
 
@@ -92,11 +87,13 @@ public class CustomerServiceTests {
             customerService.updateCustomer(1L, updatedCustomer);
         });
 
+        assertEquals("Customer with id 1 not found", exception.getMessage());
+
         verify(customerRepository, times(1)).findById(1L);
     }
 
     @Test
-    public void deleteCustomerTest() throws CustomerNotFoundException, CribNotFoundException {
+    public void deleteCustomerTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setUserName("Test Customer");

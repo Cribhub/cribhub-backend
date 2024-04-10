@@ -1,7 +1,7 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
-import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.domain.Task;
 import lombok.Getter;
 import lombok.Setter;

@@ -30,9 +30,6 @@ class JwtTokenFilterTest {
     private JwtTokenUtil jwtTokenUtil;
 
     @Mock
-    private CustomUserDetailsService userDetailsService;
-
-    @Mock
     private Log mockLogger;
 
     @InjectMocks

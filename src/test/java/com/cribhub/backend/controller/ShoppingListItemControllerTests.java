@@ -1,7 +1,6 @@
 package com.cribhub.backend.controller;
 
 import com.cribhub.backend.controllers.ShoppingListController;
-import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.services.ShoppingListService;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +44,6 @@ public class ShoppingListItemControllerTests {
 
     @Test
     public void createShoppingListForCribTest() {
-        Crib crib = new Crib();
         ShoppingListItem shoppingListItem = new ShoppingListItem();
 
         when(shoppingListService.createShoppingListForCrib(1L, shoppingListItem)).thenReturn(Optional.of(shoppingListItem));

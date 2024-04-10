@@ -1,12 +1,11 @@
 package com.cribhub.backend.integration;
 
-import com.cribhub.backend.DTO.CustomerDTO;
-import com.cribhub.backend.controllers.exceptions.CribNotFoundException;
 import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.services.CribService;
 import com.cribhub.backend.services.CustomerService;
 import org.junit.jupiter.api.AfterEach;
@@ -54,7 +53,7 @@ public class CustomerControllerIntegrationTest {
     }
 
     @AfterEach
-    public void teardown() throws CribNotFoundException, CustomerNotFoundException {
+    public void teardown() throws CustomerNotFoundException {
         customerService.deleteCustomer(testCustomer.getUserId());
         cribService.deleteCrib(testCrib.getCribId());
     }

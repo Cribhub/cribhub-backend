@@ -19,7 +19,6 @@ import java.util.function.Function;
 public class JwtTokenUtil {
 
     SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Create a secure key
-    private final long validityInMilliseconds = 3600000; // 1 hour
 
     private final CustomerRepository customerRepository;
 
@@ -42,6 +41,8 @@ public class JwtTokenUtil {
 
 
         Date now = new Date();
+        // 1 hour
+        long validityInMilliseconds = 3600000;
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()

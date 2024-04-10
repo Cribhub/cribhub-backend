@@ -1,9 +1,8 @@
-package com.cribhub.backend.DTO;
-
-import lombok.Getter;
-import lombok.Setter;
+package com.cribhub.backend.dto;
 
 import com.cribhub.backend.domain.Task;
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter

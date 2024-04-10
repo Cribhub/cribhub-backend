@@ -1,4 +1,4 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import lombok.Getter;
 import lombok.Setter;

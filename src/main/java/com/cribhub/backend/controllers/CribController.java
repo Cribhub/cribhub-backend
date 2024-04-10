@@ -1,7 +1,7 @@
 package com.cribhub.backend.controllers;
 
-import com.cribhub.backend.DTO.CribDTO;
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.dto.CribDTO;
 import com.cribhub.backend.services.CribService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

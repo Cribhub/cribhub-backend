@@ -1,4 +1,4 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
