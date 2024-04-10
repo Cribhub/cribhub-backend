@@ -2,7 +2,6 @@ package com.cribhub.backend.security;
 
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
