@@ -75,7 +75,6 @@ public class ShoppingListController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteShoppingList(@PathVariable Long id) {
         shoppingListService.deleteShoppingList(id);
-
         log.warn("Shopping list with id {} deleted", id);
         return ResponseEntity.noContent().build();
     }

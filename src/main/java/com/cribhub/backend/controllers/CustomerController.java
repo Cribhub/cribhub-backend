@@ -66,13 +66,12 @@ public class CustomerController {
 
         Customer customer = customerService.getCustomerById(customerId);
         if (customer == null) {
-            log.error("Could not join crib with id {} because customer with id {} does not exist", cribId, customerId);
+            log.error("Could not join crib with cribId {} because customer with customerId {} does not exist", cribId, customerId);
             return ResponseEntity.notFound().build();
         }
         customer.setCrib(crib);
         crib.getCribMembers().add(customer);
         Crib updatedCrib = cribService.saveCrib(crib);
-
 
         log.info("Customer with id {} joined crib with id {}", customerId, cribId);
         return ResponseEntity.ok(updatedCrib);

@@ -44,7 +44,6 @@ public class TaskController {
     @DeleteMapping("/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
-
         log.warn("Task with id {} deleted", taskId);
         return ResponseEntity.noContent().build();
     }

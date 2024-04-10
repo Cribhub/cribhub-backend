@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/cribs")
 @CrossOrigin
@@ -34,6 +33,7 @@ public class CribController {
             log.error("Crib with id {} not found", cribId);
             return ResponseEntity.notFound().build();
         }
+        
         log.info("Crib with id {} retrieved", cribId);
         return ResponseEntity.ok(CribDTO.ConvertToCribDTO(crib));
     }
