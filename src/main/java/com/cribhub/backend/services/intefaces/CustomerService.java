@@ -1,9 +1,9 @@
 package com.cribhub.backend.services.intefaces;
 
-import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
-import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.exceptions.CustomerNotFoundException;
+import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import org.springframework.stereotype.Service;
 
 @Service

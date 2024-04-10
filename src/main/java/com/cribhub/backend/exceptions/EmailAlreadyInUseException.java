@@ -1,4 +1,4 @@
-package com.cribhub.backend.controllers.exceptions;
+package com.cribhub.backend.exceptions;
 
 public class EmailAlreadyInUseException extends Throwable {
     public EmailAlreadyInUseException(String email) {

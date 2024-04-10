@@ -1,12 +1,12 @@
 package com.cribhub.backend.controllers;
 
-import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
-import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.dto.CustomerUpdateDTO;
+import com.cribhub.backend.exceptions.CustomerNotFoundException;
+import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.services.CustomerServiceImpl;
 import com.cribhub.backend.services.intefaces.CribService;
 import com.cribhub.backend.services.intefaces.CustomerService;

@@ -1,4 +1,4 @@
-package com.cribhub.backend.controllers.exceptions;
+package com.cribhub.backend.exceptions;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;

@@ -1,4 +1,4 @@
-package com.cribhub.backend.controllers.exceptions;
+package com.cribhub.backend.exceptions;
 
 import lombok.Getter;
 

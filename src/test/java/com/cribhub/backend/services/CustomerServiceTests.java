@@ -1,9 +1,9 @@
 package com.cribhub.backend.services;
 
-import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
-import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.exceptions.CustomerNotFoundException;
+import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
