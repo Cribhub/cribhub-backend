@@ -67,7 +67,7 @@ public class CustomerTest {
         String name = "Test User";
         String email = "test@example.com";
         String password = "password";
-        Customer customer = new Customer(name, email, password, crib, tasks);
+        Customer customer = new Customer(name, email, password, crib);
         assertNotNull(customer);
         assertEquals(name, customer.getUserName());
         assertEquals(email, customer.getEmail());

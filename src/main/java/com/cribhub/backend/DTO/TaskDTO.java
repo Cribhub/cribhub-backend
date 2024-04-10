@@ -21,15 +21,14 @@ public class TaskDTO {
     public static TaskDTO TaskUpdateDTO (Task task) {
         var dto = new TaskDTO();
         dto.setTaskId(task.getTaskId());
-        dto.setTaskName(task.getTaskName());
+        dto.setTaskName(task.getTitle());
         dto.setDescription(task.getDescription());
         if (task.getCrib() != null) {
             dto.setCribId(task.getCrib().getCribId());
         }
-        if (task.getCustomerTask() != null) {
-            dto.setCustomerId(task.getCustomerTask().getUserId());
+        if (task.getCustomer() != null) {
+            dto.setCustomerId(task.getCustomer().getUserId());
         }
         return dto;
     }
-
-    }
+}

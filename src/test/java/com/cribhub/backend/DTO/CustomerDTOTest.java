@@ -60,11 +60,4 @@ public class CustomerDTOTest {
     public void testCribId() {
         assertEquals(customer.getCrib().getCribId(), customerDTO.getCribId());
     }
-
-    @Test
-    public void testTaskId() {
-        assertNotNull(customerDTO.getTaskId());
-        assertEquals(customer.getTasks().size(), customerDTO.getTaskId().size());
-        assertEquals(customer.getTasks().get(0).getTaskId(), customerDTO.getTaskId().get(0));
-    }
 }

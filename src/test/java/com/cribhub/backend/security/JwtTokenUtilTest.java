@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -33,7 +34,7 @@ class JwtTokenUtilTest {
         customer.setEmail(email);
         customer.setUserId(1L);
         customer.setUserName("Test User");
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
 
         // Act
         String result = jwtTokenUtil.createToken(email);
@@ -58,7 +59,7 @@ class JwtTokenUtilTest {
         String email = "test@example.com";
         Customer customer = new Customer();
         customer.setEmail(email);
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
         String token = jwtTokenUtil.createToken(email);
 
         // Act
@@ -76,7 +77,7 @@ class JwtTokenUtilTest {
         customer.setEmail(email);
         customer.setUserId(1L);
         customer.setUserName("Test User");
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
         String token = jwtTokenUtil.createToken(email);
 
         // Act
@@ -92,7 +93,7 @@ class JwtTokenUtilTest {
         String email = "test@example.com";
         Customer customer = new Customer();
         customer.setEmail(email);
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
         String token = jwtTokenUtil.createToken(email);
 
         // Act
@@ -108,7 +109,7 @@ class JwtTokenUtilTest {
         String email = "test@example.com";
         Customer customer = new Customer();
         customer.setEmail(email);
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
         String token = jwtTokenUtil.createToken(email);
 
         // Act
@@ -124,7 +125,7 @@ class JwtTokenUtilTest {
         String email = "test@example.com";
         Customer customer = new Customer();
         customer.setEmail(email);
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
         String token = jwtTokenUtil.createToken(email);
 
         // Act
@@ -140,7 +141,7 @@ class JwtTokenUtilTest {
         String email = "test@example.com";
         Customer customer = new Customer();
         customer.setEmail(email);
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
         String token = jwtTokenUtil.createToken(email);
         UserDetails userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn(email);

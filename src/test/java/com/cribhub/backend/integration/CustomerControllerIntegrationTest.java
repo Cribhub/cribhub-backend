@@ -1,6 +1,8 @@
 package com.cribhub.backend.integration;
 
 import com.cribhub.backend.DTO.CustomerDTO;
+import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.services.CribService;
@@ -37,7 +39,7 @@ public class CustomerControllerIntegrationTest {
     private Crib testCrib;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         testCustomer = new Customer();
         testCustomer.setPassword(passwordEncoder.encode("password"));
         customerService.createCustomer(testCustomer);

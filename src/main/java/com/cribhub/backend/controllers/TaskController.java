@@ -26,7 +26,7 @@ public class TaskController {
     public ResponseEntity<TaskDTO> createTask(@PathVariable Long cribId, @PathVariable Long customerId, @RequestBody Task task) {
         Task savedTaskList = taskService.createTask(cribId, customerId, task );
 
-       log.info("Task created: id-{} name-{} description-{}", savedTaskList.getTaskId(), savedTaskList.getTaskName(), savedTaskList.getDescription());
+       log.info("Task created: id-{} name-{} description-{}", savedTaskList.getTaskId(), savedTaskList.getTitle(), savedTaskList.getDescription());
         return ResponseEntity.status(HttpStatus.CREATED).body(TaskDTO.TaskUpdateDTO(savedTaskList));
 
     }

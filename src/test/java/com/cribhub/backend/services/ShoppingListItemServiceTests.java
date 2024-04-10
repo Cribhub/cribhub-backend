@@ -1,7 +1,7 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
-import com.cribhub.backend.domain.ShoppingList;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.ShoppingListRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-public class ShoppingListServiceTests {
+public class ShoppingListItemServiceTests {
 
     @InjectMocks
     ShoppingListService shoppingListService;
@@ -35,52 +35,52 @@ public class ShoppingListServiceTests {
     @Test
     public void createShoppingListForCribTest() {
         Crib crib = new Crib();
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
         when(cribRepository.findById(1L)).thenReturn(Optional.of(crib));
-        when(shoppingListRepository.save(shoppingList)).thenReturn(shoppingList);
+        when(shoppingListRepository.save(shoppingListItem)).thenReturn(shoppingListItem);
 
-        Optional<ShoppingList> result = shoppingListService.createShoppingListForCrib(1L, shoppingList);
+        Optional<ShoppingListItem> result = shoppingListService.createShoppingListForCrib(1L, shoppingListItem);
 
         assertNotNull(result);
-        assertEquals(shoppingList, result.get());
+        assertEquals(shoppingListItem, result.get());
         verify(cribRepository, times(1)).findById(1L);
-        verify(shoppingListRepository, times(1)).save(shoppingList);
+        verify(shoppingListRepository, times(1)).save(shoppingListItem);
     }
 
     @Test
     public void getShoppingListByIdTest() {
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
-        when(shoppingListRepository.findById(1L)).thenReturn(Optional.of(shoppingList));
+        when(shoppingListRepository.findById(1L)).thenReturn(Optional.of(shoppingListItem));
 
-        Optional<ShoppingList> result = shoppingListService.getShoppingListById(1L);
+        Optional<ShoppingListItem> result = shoppingListService.getShoppingListById(1L);
 
         assertNotNull(result);
-        assertEquals(shoppingList, result.get());
+        assertEquals(shoppingListItem, result.get());
         verify(shoppingListRepository, times(1)).findById(1L);
     }
 
     @Test
     public void createOrUpdateShoppingListTest() {
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
-        when(shoppingListRepository.save(shoppingList)).thenReturn(shoppingList);
+        when(shoppingListRepository.save(shoppingListItem)).thenReturn(shoppingListItem);
 
-        ShoppingList result = shoppingListService.createOrUpdateShoppingList(shoppingList);
+        ShoppingListItem result = shoppingListService.createOrUpdateShoppingList(shoppingListItem);
 
         assertNotNull(result);
-        assertEquals(shoppingList, result);
-        verify(shoppingListRepository, times(1)).save(shoppingList);
+        assertEquals(shoppingListItem, result);
+        verify(shoppingListRepository, times(1)).save(shoppingListItem);
     }
 
     @Test
     public void createShoppingListForNonExistentCribTest() {
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
         when(cribRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Optional<ShoppingList> result = shoppingListService.createShoppingListForCrib(1L, shoppingList);
+        Optional<ShoppingListItem> result = shoppingListService.createShoppingListForCrib(1L, shoppingListItem);
 
         assertEquals(Optional.empty(), result);
         verify(cribRepository, times(1)).findById(1L);

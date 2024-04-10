@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -32,7 +33,7 @@ class CustomUserDetailsServiceTest {
         Customer customer = new Customer();
         customer.setEmail(email);
         customer.setPassword("password");
-        when(customerRepository.findByEmail(email)).thenReturn(customer);
+        when(customerRepository.findByEmail(email)).thenReturn(Optional.of(customer));
 
         // Act
         UserDetails result = customUserDetailsService.loadUserByUsername(email);

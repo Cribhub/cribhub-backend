@@ -1,10 +1,12 @@
 package com.cribhub.backend.controller;
 
 import com.cribhub.backend.controllers.CustomerController;
+import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
+import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.services.CribService;
-import com.cribhub.backend.services.CustomerService;
 import com.cribhub.backend.services.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.cribhub.backend.DTO.CustomerDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,21 +33,17 @@ public class CustomerControllerTests {
     @Mock
     CribService cribService;
 
-    @Mock
-    PasswordEncoder passwordEncoder;
-
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
-        customerController = new CustomerController(customerService, cribService, passwordEncoder);
+        customerController = new CustomerController(customerService, cribService);
     }
 
     @Test
-    public void createCustomerTest() {
+    public void createCustomerTest() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         Customer customer = new Customer();
         customer.setPassword("password");
 
-        when(passwordEncoder.encode(customer.getPassword())).thenReturn("hashedPassword");
         when(customerService.createCustomer(customer)).thenReturn(customer);
 
         ResponseEntity<CustomerDTO> result = customerController.createCustomer(customer);
@@ -56,7 +53,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void getCustomerByIdTest() {
+    public void getCustomerByIdTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
 
         when(customerService.getCustomerById(1L)).thenReturn(customer);
@@ -70,7 +67,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void deleteCustomerTest() {
+    public void deleteCustomerTest() throws CustomerNotFoundException {
         doNothing().when(customerService).deleteCustomer(1L);
 
         ResponseEntity<String> result = customerController.deleteCustomer(1L);
@@ -80,7 +77,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void joinCribTest() {
+    public void joinCribTest() throws CustomerNotFoundException {
         Crib crib = new Crib();
         Customer customer = new Customer();
 
@@ -98,7 +95,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void joinCribTest_NotFound() {
+    public void joinCribTest_NotFound() throws CustomerNotFoundException {
         // Test when crib is null
         when(cribService.getCribById(1L)).thenReturn(null);
         ResponseEntity<Crib> result = customerController.joinCrib(1L, 1L);

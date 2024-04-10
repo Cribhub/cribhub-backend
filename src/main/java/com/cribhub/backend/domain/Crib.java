@@ -1,6 +1,7 @@
 package com.cribhub.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,26 +16,26 @@ public class Crib {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cribId;
 
-    private String cribName;
+    @NotBlank
+    private String name;
 
     @OneToMany(mappedBy = "crib")
     private List<Customer> cribMembers;
 
     @OneToMany(mappedBy = "crib")
-    private List <ShoppingList> shoppingListItems;
+    private List<ShoppingListItem> shoppingList;
 
     @OneToMany(mappedBy = "crib")
-    private List <Task> tasks;
-
+    private List<Task> tasks;
 
     public Crib() {
         this.cribMembers = new ArrayList<>();
     }
 
-    public Crib(String cribName, List<Customer> cribMembers, List<ShoppingList> shoppingListItems, List<Task> tasks){
-        this.cribName = cribName;
+    public Crib(String name, List<Customer> cribMembers, List<ShoppingListItem> shoppingList, List<Task> tasks){
+        this.name = name;
         this.cribMembers = cribMembers;
-        this.shoppingListItems = shoppingListItems;
+        this.shoppingList = shoppingList;
         this.tasks = tasks;
     }
 

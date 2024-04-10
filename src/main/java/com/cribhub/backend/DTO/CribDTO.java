@@ -1,11 +1,12 @@
 package com.cribhub.backend.DTO;
 
-import com.cribhub.backend.domain.ShoppingList;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Task;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,8 +16,8 @@ public class CribDTO {
     private Long cribId;
     private String cribName;
     private List<CribMemberDTO> cribMembers; // Changed to list of CribMemberDTO
-    private List<Long> taskId;
-    private List<ShoppingList> shoppingListItems;
+    private List<Task> taskList;
+    private List<ShoppingListItem> shoppingListItemItems;
 
     // Nested DTO class for crib members
     @Setter
@@ -29,7 +30,7 @@ public class CribDTO {
     public static CribDTO ConvertToCribDTO(Crib crib) {
         var dto = new CribDTO();
         dto.setCribId(crib.getCribId());
-        dto.setCribName(crib.getCribName());
+        dto.setCribName(crib.getName());
         if (crib.getCribMembers() != null) {
             dto.setCribMembers(crib.getCribMembers().stream()
                     .map(customer -> {
@@ -40,13 +41,11 @@ public class CribDTO {
                     })
                     .collect(Collectors.toList()));
         }
-        if (crib.getShoppingListItems() != null) {
-            dto.setShoppingListItems(crib.getShoppingListItems());
+        if (crib.getShoppingList() != null) {
+            dto.setShoppingListItemItems(crib.getShoppingList());
         }
         if (crib.getTasks() != null) {
-            dto.setTaskId(crib.getTasks().stream()
-                    .map(Task::getTaskId)
-                    .collect(Collectors.toList()));
+            dto.setTaskList(new ArrayList<>(crib.getTasks()));
         }
         return dto;
     }

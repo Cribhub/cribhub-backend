@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Component
@@ -28,10 +29,12 @@ public class JwtTokenUtil {
     }
 
     public String createToken(String username) {
-        Customer customer = customerRepository.findByEmail(username);
-        if (customer == null) {
+        Optional<Customer> customerOptional = customerRepository.findByEmail(username);
+        if (customerOptional.isEmpty()) {
             throw new IllegalArgumentException("User not found with email: " + username);
         }
+
+        Customer customer = customerOptional.get();
 
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("customerId", customer.getUserId()); // Add customerId as a claim

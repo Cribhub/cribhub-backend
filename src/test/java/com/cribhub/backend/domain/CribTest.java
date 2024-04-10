@@ -28,8 +28,8 @@ public class CribTest {
     @Test
     public void testCribName() {
         String name = "Test Crib";
-        crib.setCribName(name);
-        assertEquals(name, crib.getCribName());
+        crib.setName(name);
+        assertEquals(name, crib.getName());
     }
 
     @Test
@@ -41,9 +41,9 @@ public class CribTest {
 
     @Test
     public void testShoppingListItems() {
-        List<ShoppingList> items = new ArrayList<>();
-        crib.setShoppingListItems(items);
-        assertEquals(items, crib.getShoppingListItems());
+        List<ShoppingListItem> items = new ArrayList<>();
+        crib.setShoppingList(items);
+        assertEquals(items, crib.getShoppingList());
     }
 
     @Test
@@ -56,14 +56,14 @@ public class CribTest {
     @Test
     public void testConstructor() {
         List<Customer> members = new ArrayList<>();
-        List<ShoppingList> items = new ArrayList<>();
+        List<ShoppingListItem> items = new ArrayList<>();
         List<Task> tasks = new ArrayList<>();
         String name = "Test Crib";
         Crib crib = new Crib(name, members, items, tasks);
         assertNotNull(crib);
-        assertEquals(name, crib.getCribName());
+        assertEquals(name, crib.getName());
         assertEquals(members, crib.getCribMembers());
-        assertEquals(items, crib.getShoppingListItems());
+        assertEquals(items, crib.getShoppingList());
         assertEquals(tasks, crib.getTasks());
     }
 }

@@ -14,7 +14,6 @@ public class TaskUpdateDTO {
 
     private Long customerId;
 
-
     public TaskUpdateDTO(Long cribId, String taskName, String description, Long customerId) {
         this.cribId = cribId;
         this.taskName = taskName;

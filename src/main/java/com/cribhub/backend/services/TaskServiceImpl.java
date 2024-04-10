@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
 
         task.setCrib(crib);
-        task.setCustomerTask(customer);
+        task.setCustomer(customer);
         return taskRepository.save(task);
     }
 

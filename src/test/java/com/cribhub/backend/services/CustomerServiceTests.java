@@ -1,5 +1,8 @@
 package com.cribhub.backend.services;
 
+import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
+import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -22,13 +26,16 @@ public class CustomerServiceTests {
     @Mock
     CustomerRepository customerRepository;
 
+    @Mock
+    PasswordEncoder passwordEncoder;
+
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void getCustomerByIdTest() {
+    public void getCustomerByIdTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setUserName("Test Customer");
@@ -42,7 +49,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void createCustomerTest() {
+    public void createCustomerTest() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         Customer customer = new Customer();
         customer.setUserName("Test Customer");
 
@@ -55,7 +62,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void updateCustomerTest() {
+    public void updateCustomerTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setEmail("test@example.com");
@@ -74,7 +81,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void updateNonExistentCustomerTest() {
+    public void updateNonExistentCustomerTest() throws CustomerNotFoundException {
         Customer updatedCustomer = new Customer();
         updatedCustomer.setEmail("updated@example.com");
 
@@ -87,7 +94,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void deleteCustomerTest() {
+    public void deleteCustomerTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setUserName("Test Customer");

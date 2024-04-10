@@ -24,7 +24,7 @@ public class BackendApplication {
 		return args -> {
 			Crib crib = new Crib();
 			crib.setCribId(1L);
-			crib.setCribName("TestCrib");
+			crib.setName("TestCrib");
 			cribRepository.save(crib);
 
 			String encodedPassword = passwordEncoder.encode("password");

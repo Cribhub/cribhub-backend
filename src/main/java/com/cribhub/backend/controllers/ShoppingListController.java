@@ -1,6 +1,6 @@
 package com.cribhub.backend.controllers;
 
-import com.cribhub.backend.domain.ShoppingList;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.services.ShoppingListService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,9 @@ public class ShoppingListController {
         this.shoppingListService = shoppingListService;
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<ShoppingList> getShoppingListById(@PathVariable Long id) {
-        Optional<ShoppingList> shoppingListOptional = shoppingListService.getShoppingListById(id);
+    public ResponseEntity<ShoppingListItem> getShoppingListById(@PathVariable Long id) {
+        Optional<ShoppingListItem> shoppingListOptional = shoppingListService.getShoppingListById(id);
 
         // If the shopping list is not found, return a 404 Not Found response
         if(shoppingListOptional.isEmpty()) {
@@ -33,13 +32,13 @@ public class ShoppingListController {
             return ResponseEntity.notFound().build();
         }
 
-        log.info("Shopping list item retrieved: id-{} name-{}", id, shoppingListOptional.get().getShoppingName());
+        log.info("Shopping list item retrieved: id-{} name-{}", id, shoppingListOptional.get().getName());
         return ResponseEntity.ok(shoppingListOptional.get());
     }
 
     @PostMapping("crib/{cribId}")
-    public ResponseEntity<ShoppingList> createShoppingListForCrib(@PathVariable Long cribId, @RequestBody ShoppingList shoppingList) {
-        Optional<ShoppingList> savedShoppingList = shoppingListService.createShoppingListForCrib(cribId, shoppingList);
+    public ResponseEntity<ShoppingListItem> createShoppingListForCrib(@PathVariable Long cribId, @RequestBody ShoppingListItem shoppingListItem) {
+        Optional<ShoppingListItem> savedShoppingList = shoppingListService.createShoppingListForCrib(cribId, shoppingListItem);
 
         // If the shopping list is not saved, return a 500 internal server error
         if(savedShoppingList.isEmpty()) {
@@ -47,29 +46,29 @@ public class ShoppingListController {
             return ResponseEntity.internalServerError().build();
         }
 
-        log.info("Shopping list item created: id-{} name-{}", savedShoppingList.get().getShoppingListId(), savedShoppingList.get().getShoppingName());
+        log.info("Shopping list item created: id-{} name-{}", savedShoppingList.get().getId(), savedShoppingList.get().getName());
         return ResponseEntity.ok(savedShoppingList.get());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ShoppingList> updateShoppingList(@PathVariable Long id, @RequestBody ShoppingList shoppingList) {
+    public ResponseEntity<ShoppingListItem> updateShoppingList(@PathVariable Long id, @RequestBody ShoppingListItem shoppingListItem) {
         log.info("Updating shopping list with id {}", id);
 
         // Check if the shopping list item exists
-        Optional<ShoppingList> shoppingListOptional = shoppingListService.getShoppingListById(id);
+        Optional<ShoppingListItem> shoppingListOptional = shoppingListService.getShoppingListById(id);
         if  (shoppingListOptional.isEmpty()) {
             log.error("Can not update shopping list item with id {} because it does not exist.", id);
             return ResponseEntity.notFound().build();
         }
 
-        ShoppingList existingList = shoppingListOptional.get();
-        existingList.setShoppingName(shoppingList.getShoppingName());
-        existingList.setShoppingDescription(shoppingList.getShoppingDescription());
+        ShoppingListItem existingList = shoppingListOptional.get();
+        existingList.setName(shoppingListItem.getName());
+        existingList.setDescription(shoppingListItem.getDescription());
         // Update other fields as necessary
-        ShoppingList updatedShoppingList = shoppingListService.createOrUpdateShoppingList(existingList);
+        ShoppingListItem updatedShoppingListItem = shoppingListService.createOrUpdateShoppingList(existingList);
 
-        log.info("Shopping list item updated: id-{} name-{}", id, updatedShoppingList.getShoppingName());
-        return ResponseEntity.ok(updatedShoppingList);
+        log.info("Shopping list item updated: id-{} name-{}", id, updatedShoppingListItem.getName());
+        return ResponseEntity.ok(updatedShoppingListItem);
     }
 
     @DeleteMapping("/{id}")
