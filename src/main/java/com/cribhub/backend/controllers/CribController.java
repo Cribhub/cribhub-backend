@@ -4,12 +4,10 @@ import com.cribhub.backend.DTO.CribDTO;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.services.CribService;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/cribs")
