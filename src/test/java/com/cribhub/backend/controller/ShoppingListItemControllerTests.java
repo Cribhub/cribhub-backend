@@ -1,8 +1,7 @@
 package com.cribhub.backend.controller;
 
 import com.cribhub.backend.controllers.ShoppingListController;
-import com.cribhub.backend.domain.Crib;
-import com.cribhub.backend.domain.ShoppingList;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.services.ShoppingListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-public class ShoppingListControllerTests {
+public class ShoppingListItemControllerTests {
 
     @InjectMocks
     ShoppingListController shoppingListController;
@@ -32,44 +31,43 @@ public class ShoppingListControllerTests {
 
     @Test
     public void getShoppingListByIdTest() {
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
-        when(shoppingListService.getShoppingListById(1L)).thenReturn(Optional.of(shoppingList));
+        when(shoppingListService.getShoppingListById(1L)).thenReturn(Optional.of(shoppingListItem));
 
-        ResponseEntity<ShoppingList> result = shoppingListController.getShoppingListById(1L);
+        ResponseEntity<ShoppingListItem> result = shoppingListController.getShoppingListById(1L);
 
         assertNotNull(result);
-        assertEquals(shoppingList, result.getBody());
+        assertEquals(shoppingListItem, result.getBody());
         verify(shoppingListService, times(1)).getShoppingListById(1L);
     }
 
     @Test
     public void createShoppingListForCribTest() {
-        Crib crib = new Crib();
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
-        when(shoppingListService.createShoppingListForCrib(1L, shoppingList)).thenReturn(Optional.of(shoppingList));
+        when(shoppingListService.createShoppingListForCrib(1L, shoppingListItem)).thenReturn(Optional.of(shoppingListItem));
 
-        ResponseEntity<ShoppingList> result = shoppingListController.createShoppingListForCrib(1L, shoppingList);
+        ResponseEntity<ShoppingListItem> result = shoppingListController.createShoppingListForCrib(1L, shoppingListItem);
 
         assertNotNull(result);
-        assertEquals(shoppingList, result.getBody());
-        verify(shoppingListService, times(1)).createShoppingListForCrib(1L, shoppingList);
+        assertEquals(shoppingListItem, result.getBody());
+        verify(shoppingListService, times(1)).createShoppingListForCrib(1L, shoppingListItem);
     }
 
     @Test
     public void updateShoppingListTest() {
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
 
-        when(shoppingListService.getShoppingListById(1L)).thenReturn(Optional.of(shoppingList));
-        when(shoppingListService.createOrUpdateShoppingList(shoppingList)).thenReturn(shoppingList);
+        when(shoppingListService.getShoppingListById(1L)).thenReturn(Optional.of(shoppingListItem));
+        when(shoppingListService.createOrUpdateShoppingList(shoppingListItem)).thenReturn(shoppingListItem);
 
-        ResponseEntity<ShoppingList> result = shoppingListController.updateShoppingList(1L, shoppingList);
+        ResponseEntity<ShoppingListItem> result = shoppingListController.updateShoppingList(1L, shoppingListItem);
 
         assertNotNull(result);
-        assertEquals(shoppingList, result.getBody());
+        assertEquals(shoppingListItem, result.getBody());
         verify(shoppingListService, times(1)).getShoppingListById(1L);
-        verify(shoppingListService, times(1)).createOrUpdateShoppingList(shoppingList);
+        verify(shoppingListService, times(1)).createOrUpdateShoppingList(shoppingListItem);
     }
 
     @Test

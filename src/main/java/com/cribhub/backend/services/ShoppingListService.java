@@ -2,7 +2,7 @@ package com.cribhub.backend.services;
 
 
 import com.cribhub.backend.domain.Crib;
-import com.cribhub.backend.domain.ShoppingList;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.ShoppingListRepository;
 import jakarta.transaction.Transactional;
@@ -24,24 +24,24 @@ public class ShoppingListService {
     }
 
     @Transactional
-    public Optional<ShoppingList> createShoppingListForCrib(Long cribId, ShoppingList shoppingList) {
+    public Optional<ShoppingListItem> createShoppingListForCrib(Long cribId, ShoppingListItem shoppingListItem) {
         Optional<Crib> cribOptional = cribRepository.findById(cribId);
-        if (!cribOptional.isPresent()) {
+        if (cribOptional.isEmpty()) {
             return Optional.empty();
         }
 
         Crib crib = cribOptional.get();
-        shoppingList.setCrib(crib);
-        ShoppingList savedShoppingList = shoppingListRepository.save(shoppingList);
-        return Optional.of(savedShoppingList);
+        shoppingListItem.setCrib(crib);
+        ShoppingListItem savedShoppingListItem = shoppingListRepository.save(shoppingListItem);
+        return Optional.of(savedShoppingListItem);
     }
 
-    public Optional<ShoppingList> getShoppingListById(Long id) {
+    public Optional<ShoppingListItem> getShoppingListById(Long id) {
         return shoppingListRepository.findById(id);
     }
 
-    public ShoppingList createOrUpdateShoppingList(ShoppingList shoppingList) {
-        return shoppingListRepository.save(shoppingList);
+    public ShoppingListItem createOrUpdateShoppingList(ShoppingListItem shoppingListItem) {
+        return shoppingListRepository.save(shoppingListItem);
     }
 
     public void deleteShoppingList(Long id) {

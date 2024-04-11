@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil {
 
     SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Create a secure key
-    private long validityInMilliseconds = 3600000; // 1 hour
 
     private final CustomerRepository customerRepository;
 
@@ -28,10 +28,12 @@ public class JwtTokenUtil {
     }
 
     public String createToken(String username) {
-        Customer customer = customerRepository.findByEmail(username);
-        if (customer == null) {
+        Optional<Customer> customerOptional = customerRepository.findByEmail(username);
+        if (customerOptional.isEmpty()) {
             throw new IllegalArgumentException("User not found with email: " + username);
         }
+
+        Customer customer = customerOptional.get();
 
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("customerId", customer.getUserId()); // Add customerId as a claim
@@ -39,6 +41,8 @@ public class JwtTokenUtil {
 
 
         Date now = new Date();
+        // 1 hour
+        long validityInMilliseconds = 3600000;
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()

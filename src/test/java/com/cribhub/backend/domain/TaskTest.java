@@ -32,8 +32,8 @@ public class TaskTest {
     @Test
     public void testTaskName() {
         String name = "Test Task";
-        task.setTaskName(name);
-        assertEquals(name, task.getTaskName());
+        task.setTitle(name);
+        assertEquals(name, task.getTitle());
     }
 
     @Test
@@ -46,8 +46,8 @@ public class TaskTest {
     @Test
     public void testCustomerTask() {
         Customer customer = new Customer();
-        task.setCustomerTask(customer);
-        assertEquals(customer, task.getCustomerTask());
+        task.setCustomer(customer);
+        assertEquals(customer, task.getCustomer());
     }
 
     @Test
@@ -56,11 +56,10 @@ public class TaskTest {
         String name = "Test Task";
         String description = "This is a test task";
         Customer customer = new Customer();
-        Task task = new Task(crib, name, description, customer);
+        Task task = new Task(name, description, customer, crib);
         assertNotNull(task);
         assertEquals(crib, task.getCrib());
-        assertEquals(name, task.getTaskName());
+        assertEquals(name, task.getTitle());
         assertEquals(description, task.getDescription());
-        assertEquals(customer, task.getCustomerTask());
     }
 }

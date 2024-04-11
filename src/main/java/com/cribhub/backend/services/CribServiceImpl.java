@@ -2,6 +2,7 @@ package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.repositories.CribRepository;
+import com.cribhub.backend.services.intefaces.CribService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

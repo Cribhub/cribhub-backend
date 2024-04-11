@@ -1,8 +1,5 @@
 package com.cribhub.backend.security;
 
-import com.cribhub.backend.security.CustomUserDetailsService;
-import com.cribhub.backend.security.JwtTokenFilter;
-import com.cribhub.backend.security.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,10 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class JwtTokenFilterTest {
@@ -31,9 +28,6 @@ class JwtTokenFilterTest {
 
     @Mock
     private JwtTokenUtil jwtTokenUtil;
-
-    @Mock
-    private CustomUserDetailsService userDetailsService;
 
     @Mock
     private Log mockLogger;

@@ -1,5 +1,8 @@
 package com.cribhub.backend.services;
 
+import com.cribhub.backend.controllers.exceptions.CustomerNotFoundException;
+import com.cribhub.backend.controllers.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.controllers.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,17 +10,21 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 public class CustomerServiceTests {
 
     @InjectMocks
     CustomerServiceImpl customerService;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @Mock
     CustomerRepository customerRepository;
@@ -28,7 +35,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void getCustomerByIdTest() {
+    public void getCustomerByIdTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setUserName("Test Customer");
@@ -42,11 +49,12 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void createCustomerTest() {
+    public void createCustomerTest() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         Customer customer = new Customer();
         customer.setUserName("Test Customer");
 
         when(customerRepository.save(customer)).thenReturn(customer);
+        when(passwordEncoder.encode(customer.getPassword())).thenReturn("encodedPassword");
 
         Customer saved = customerService.createCustomer(customer);
 
@@ -55,7 +63,7 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void updateCustomerTest() {
+    public void updateCustomerTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setEmail("test@example.com");
@@ -80,14 +88,17 @@ public class CustomerServiceTests {
 
         when(customerRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Customer result = customerService.updateCustomer(1L, updatedCustomer);
+        CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class, () -> {
+            customerService.updateCustomer(1L, updatedCustomer);
+        });
 
-        assertNull(result);
+        assertEquals("Customer with id 1 not found", exception.getMessage());
+
         verify(customerRepository, times(1)).findById(1L);
     }
 
     @Test
-    public void deleteCustomerTest() {
+    public void deleteCustomerTest() throws CustomerNotFoundException {
         Customer customer = new Customer();
         customer.setUserId(1L);
         customer.setUserName("Test Customer");

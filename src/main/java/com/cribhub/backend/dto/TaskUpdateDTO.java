@@ -1,4 +1,4 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,6 @@ public class TaskUpdateDTO {
     private String description;
 
     private Long customerId;
-
 
     public TaskUpdateDTO(Long cribId, String taskName, String description, Long customerId) {
         this.cribId = cribId;

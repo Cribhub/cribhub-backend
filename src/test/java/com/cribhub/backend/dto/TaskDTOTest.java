@@ -1,4 +1,4 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TaskDTOTest {
 
@@ -18,7 +17,7 @@ public class TaskDTOTest {
     public void setUp() {
         task = new Task();
         task.setTaskId(1L);
-        task.setTaskName("Test Task");
+        task.setTitle("Test Task");
         task.setDescription("Test Description");
 
         Crib crib = new Crib();
@@ -27,7 +26,7 @@ public class TaskDTOTest {
 
         Customer customer = new Customer();
         customer.setUserId(1L);
-        task.setCustomerTask(customer);
+        task.setCustomer(customer);
 
         taskDTO = TaskDTO.TaskUpdateDTO(task);
     }
@@ -39,7 +38,7 @@ public class TaskDTOTest {
 
     @Test
     public void testTaskName() {
-        assertEquals(task.getTaskName(), taskDTO.getTaskName());
+        assertEquals(task.getTitle(), taskDTO.getTaskName());
     }
 
     @Test
@@ -54,6 +53,6 @@ public class TaskDTOTest {
 
     @Test
     public void testCustomerId() {
-        assertEquals(task.getCustomerTask().getUserId(), taskDTO.getCustomerId());
+        assertEquals(task.getCustomer().getUserId(), taskDTO.getCustomerId());
     }
 }

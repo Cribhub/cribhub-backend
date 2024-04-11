@@ -1,21 +1,15 @@
 package com.cribhub.backend.controller;
 
-import com.cribhub.backend.DTO.TaskDTO;
 import com.cribhub.backend.controllers.TaskController;
-import com.cribhub.backend.domain.Crib;
-import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.domain.Task;
-import com.cribhub.backend.services.CribService;
-import com.cribhub.backend.services.CustomerService;
-import com.cribhub.backend.services.TaskService;
+import com.cribhub.backend.dto.TaskDTO;
+import com.cribhub.backend.services.intefaces.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,12 +24,6 @@ public class TaskControllerTests {
     @Mock
     TaskService taskService;
 
-    @Mock
-    CribService cribService;
-
-    @Mock
-    CustomerService customerService;
-
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
@@ -43,8 +31,6 @@ public class TaskControllerTests {
 
     @Test
     public void createTaskTest() {
-        Crib crib = new Crib();
-        Customer customer = new Customer();
         Task task = new Task();
         TaskDTO taskDTO = TaskDTO.TaskUpdateDTO(task);
 

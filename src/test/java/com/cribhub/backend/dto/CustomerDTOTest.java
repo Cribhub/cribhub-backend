@@ -1,4 +1,4 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CustomerDTOTest {
 
@@ -59,12 +58,5 @@ public class CustomerDTOTest {
     @Test
     public void testCribId() {
         assertEquals(customer.getCrib().getCribId(), customerDTO.getCribId());
-    }
-
-    @Test
-    public void testTaskId() {
-        assertNotNull(customerDTO.getTaskId());
-        assertEquals(customer.getTasks().size(), customerDTO.getTaskId().size());
-        assertEquals(customer.getTasks().get(0).getTaskId(), customerDTO.getTaskId().get(0));
     }
 }

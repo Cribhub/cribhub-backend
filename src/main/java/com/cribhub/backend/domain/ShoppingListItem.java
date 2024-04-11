@@ -8,26 +8,26 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Task {
+public class ShoppingListItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long taskId;
+    private Long id;
 
     @NotBlank
-    private String title;
+    private String name;
 
     private String description;
 
     @ManyToOne
-    private Customer customer;
-
-    @ManyToOne
     private Crib crib;
 
-    public Task(){}
+    @ManyToOne
+    private Customer customer;
 
-    public Task(String taskName, String description, Customer customer, Crib crib){
-        this.title = taskName;
+    public ShoppingListItem(){}
+
+    public ShoppingListItem(String name, String description, Customer customer, Crib crib) {
+        this.name = name;
         this.description = description;
         this.customer = customer;
         this.crib = crib;

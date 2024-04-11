@@ -6,6 +6,7 @@ import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
 import com.cribhub.backend.repositories.TaskRepository;
+import com.cribhub.backend.services.intefaces.TaskService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
 
         task.setCrib(crib);
-        task.setCustomerTask(customer);
+        task.setCustomer(customer);
         return taskRepository.save(task);
     }
 

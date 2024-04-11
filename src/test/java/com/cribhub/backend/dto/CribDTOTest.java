@@ -1,8 +1,8 @@
-package com.cribhub.backend.DTO;
+package com.cribhub.backend.dto;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
-import com.cribhub.backend.domain.ShoppingList;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.domain.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class CribDTOTest {
     public void setUp() {
         crib = new Crib();
         crib.setCribId(1L);
-        crib.setCribName("Test Crib");
+        crib.setName("Test Crib");
 
         List<Customer> members = new ArrayList<>();
         Customer customer = new Customer();
@@ -31,17 +31,17 @@ public class CribDTOTest {
         members.add(customer);
         crib.setCribMembers(members);
 
-        List<ShoppingList> items = new ArrayList<>();
-        ShoppingList shoppingList = new ShoppingList();
-        shoppingList.setShoppingListId(1L);
-        shoppingList.setShoppingName("Test Shopping List");
-        items.add(shoppingList);
-        crib.setShoppingListItems(items);
+        List<ShoppingListItem> items = new ArrayList<>();
+        ShoppingListItem shoppingListItem = new ShoppingListItem();
+        shoppingListItem.setId(1L);
+        shoppingListItem.setName("Test Shopping List");
+        items.add(shoppingListItem);
+        crib.setShoppingList(items);
 
         List<Task> tasks = new ArrayList<>();
         Task task = new Task();
         task.setTaskId(1L);
-        task.setTaskName("Test Task");
+        task.setTitle("Test Task");
         tasks.add(task);
         crib.setTasks(tasks);
 
@@ -55,7 +55,7 @@ public class CribDTOTest {
 
     @Test
     public void testCribName() {
-        assertEquals(crib.getCribName(), cribDTO.getCribName());
+        assertEquals(crib.getName(), cribDTO.getCribName());
     }
 
     @Test
@@ -68,14 +68,7 @@ public class CribDTOTest {
 
     @Test
     public void testShoppingListItems() {
-        assertNotNull(cribDTO.getShoppingListItems());
-        assertEquals(crib.getShoppingListItems(), cribDTO.getShoppingListItems());
-    }
-
-    @Test
-    public void testTaskId() {
-        assertNotNull(cribDTO.getTaskId());
-        assertEquals(crib.getTasks().size(), cribDTO.getTaskId().size());
-        assertEquals(crib.getTasks().get(0).getTaskId(), cribDTO.getTaskId().get(0));
+        assertNotNull(cribDTO.getShoppingListItemItems());
+        assertEquals(crib.getShoppingList(), cribDTO.getShoppingListItemItems());
     }
 }
