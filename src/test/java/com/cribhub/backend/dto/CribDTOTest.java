@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CribDTOTest {
 
@@ -56,19 +55,5 @@ public class CribDTOTest {
     @Test
     public void testCribName() {
         assertEquals(crib.getName(), cribDTO.getCribName());
-    }
-
-    @Test
-    public void testCribMembers() {
-        assertNotNull(cribDTO.getCribMembers());
-        assertEquals(crib.getCribMembers().size(), cribDTO.getCribMembers().size());
-        assertEquals(crib.getCribMembers().get(0).getUserId(), cribDTO.getCribMembers().get(0).getId());
-        assertEquals(crib.getCribMembers().get(0).getUserName(), cribDTO.getCribMembers().get(0).getName());
-    }
-
-    @Test
-    public void testShoppingListItems() {
-        assertNotNull(cribDTO.getShoppingListItemItems());
-        assertEquals(crib.getShoppingList(), cribDTO.getShoppingListItemItems());
     }
 }

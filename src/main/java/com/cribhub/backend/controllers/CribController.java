@@ -2,12 +2,16 @@ package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.dto.CribDTO;
+import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.services.intefaces.CribService;
+import jakarta.validation.constraints.Min;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Validated
 @RestController
 @RequestMapping("/cribs")
 @CrossOrigin
@@ -27,12 +31,8 @@ public class CribController {
     }
 
     @GetMapping("/{cribId}")
-    public ResponseEntity<CribDTO> getCribById(@PathVariable Long cribId) {
+    public ResponseEntity<CribDTO> getCribById(@PathVariable @Min(1) long cribId) throws CribNotFoundException {
         Crib crib = cribService.getCribById(cribId);
-        if (crib == null) {
-            log.error("Crib with id {} not found", cribId);
-            return ResponseEntity.notFound().build();
-        }
         
         log.info("Crib with id {} retrieved", cribId);
         return ResponseEntity.ok(CribDTO.ConvertToCribDTO(crib));

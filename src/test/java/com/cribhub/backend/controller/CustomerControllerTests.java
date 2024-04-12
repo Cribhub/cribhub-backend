@@ -78,7 +78,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void joinCribTest() throws CustomerNotFoundException {
+    public void joinCribTest() throws CustomerNotFoundException, CribNotFoundException {
         Crib crib = new Crib();
         Customer customer = new Customer();
 
@@ -96,7 +96,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void joinCribTest_NotFound() throws CustomerNotFoundException {
+    public void joinCribTest_NotFound() throws CustomerNotFoundException, CribNotFoundException {
         // Test when crib is null
         when(cribService.getCribById(1L)).thenReturn(null);
         ResponseEntity<Crib> result = customerController.joinCrib(1L, 1L);

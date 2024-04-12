@@ -4,6 +4,7 @@ import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.dto.CustomerUpdateDTO;
+import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
@@ -65,7 +66,7 @@ public class CustomerController {
     }
 
     @PostMapping("customer/{customerId}/join/{cribId}")
-    public ResponseEntity<Crib> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId) throws CustomerNotFoundException {
+    public ResponseEntity<Crib> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId) throws CustomerNotFoundException, CribNotFoundException {
         Crib crib = cribService.getCribById(cribId);
         if (crib == null) {
             log.error("Could not join crib with id {} because it does not exist", cribId);

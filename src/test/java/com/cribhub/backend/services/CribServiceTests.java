@@ -1,6 +1,7 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.repositories.CribRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ public class CribServiceTests {
     }
 
     @Test
-    public void testGetCribById() {
+    public void testGetCribById() throws CribNotFoundException {
         Crib crib = new Crib();
         when(cribRepository.findById(1L)).thenReturn(Optional.of(crib));
 

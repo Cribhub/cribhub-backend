@@ -1,6 +1,7 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.services.intefaces.CribService;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,12 @@ public class CribServiceImpl implements CribService {
     }
 
     @Override
-    public Crib getCribById(Long cribId) {
+    public Crib getCribById(Long cribId) throws CribNotFoundException {
+        Crib crib = cribRepository.findById(cribId).orElse(null);
+        if (crib == null) {
+            throw new CribNotFoundException(cribId);
+        }
+
         return cribRepository.findById(cribId).orElse(null);
     }
 
