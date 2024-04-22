@@ -7,7 +7,7 @@ import com.cribhub.backend.dto.CustomerUpdateDTO;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.services.CustomerServiceImpl;
 import com.cribhub.backend.services.intefaces.CribService;
 import com.cribhub.backend.services.intefaces.CustomerService;
@@ -34,10 +34,12 @@ public class CustomerController {
     }
 
     @PostMapping("/customer")
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid Customer customer) throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid Customer customer)
+            throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
         customerService.createCustomer(customer);
 
-        log.info("Customer created: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(), customer.getEmail());
+        log.info("Customer created: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(),
+                customer.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body(CustomerDTO.ConvertToDTO(customer));
     }
 
@@ -45,15 +47,18 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable @Min(1) long id) throws CustomerNotFoundException {
         Customer customer = customerService.getCustomerById(id);
 
-        log.info("Customer retrieved: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(), customer.getEmail());
+        log.info("Customer retrieved: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(),
+                customer.getEmail());
         return ResponseEntity.ok(CustomerDTO.ConvertToDTO(customer));
     }
 
     @PutMapping("/customer/{id}")
-    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable long id, @RequestBody @Valid CustomerUpdateDTO updateDto) throws CustomerNotFoundException {
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable long id,
+            @RequestBody @Valid CustomerUpdateDTO updateDto) throws CustomerNotFoundException {
         Customer updatedCustomer = customerService.updateCustomer(id, CustomerDTO.toCustomer(updateDto));
 
-        log.info("Customer updated: id-{} name-{} email-{}", updatedCustomer.getUserId(), updatedCustomer.getUserName(), updatedCustomer.getEmail());
+        log.info("Customer updated: id-{} name-{} email-{}", updatedCustomer.getUserId(), updatedCustomer.getUserName(),
+                updatedCustomer.getEmail());
         return ResponseEntity.ok(CustomerDTO.ConvertToDTO(updatedCustomer));
     }
 
@@ -66,7 +71,8 @@ public class CustomerController {
     }
 
     @PostMapping("customer/{customerId}/join/{cribId}")
-    public ResponseEntity<Crib> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId) throws CustomerNotFoundException, CribNotFoundException {
+    public ResponseEntity<Crib> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId)
+            throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
         Crib crib = cribService.getCribById(cribId);
         if (crib == null) {
             log.error("Could not join crib with id {} because it does not exist", cribId);
@@ -75,7 +81,8 @@ public class CustomerController {
 
         Customer customer = customerService.getCustomerById(customerId);
         if (customer == null) {
-            log.error("Could not join crib with cribId {} because customer with customerId {} does not exist", cribId, customerId);
+            log.error("Could not join crib with cribId {} because customer with customerId {} does not exist", cribId,
+                    customerId);
             return ResponseEntity.notFound().build();
         }
         customer.setCrib(crib);
@@ -85,6 +92,5 @@ public class CustomerController {
         log.info("Customer with id {} joined crib with id {}", customerId, cribId);
         return ResponseEntity.ok(updatedCrib);
     }
-
 
 }

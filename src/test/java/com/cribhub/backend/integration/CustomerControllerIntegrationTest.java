@@ -5,7 +5,7 @@ import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.services.intefaces.CribService;
 import com.cribhub.backend.services.intefaces.CustomerService;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +40,7 @@ public class CustomerControllerIntegrationTest {
     private Crib testCrib;
 
     @BeforeEach
-    public void setup() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
+    public void setup() throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
         testCustomer = new Customer();
         testCustomer.setUserName("TestCustomer");
         testCustomer.setEmail("test@testmail.com");
@@ -69,21 +69,24 @@ public class CustomerControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Customer> request = new HttpEntity<>(newCustomer, headers);
 
-        ResponseEntity<CustomerDTO> response = restTemplate.exchange("/customer", HttpMethod.POST, request, CustomerDTO.class);
+        ResponseEntity<CustomerDTO> response = restTemplate.exchange("/customer", HttpMethod.POST, request,
+                CustomerDTO.class);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
     public void testGetCustomerById() {
-        ResponseEntity<CustomerDTO> response = restTemplate.getForEntity("/customer/" + testCustomer.getUserId(), CustomerDTO.class);
+        ResponseEntity<CustomerDTO> response = restTemplate.getForEntity("/customer/" + testCustomer.getUserId(),
+                CustomerDTO.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void testJoinCrib() {
-        ResponseEntity<Crib> response = restTemplate.postForEntity("/customer/" + testCustomer.getUserId() + "/join/" + testCrib.getCribId(), null, Crib.class);
+        ResponseEntity<Crib> response = restTemplate.postForEntity(
+                "/customer/" + testCustomer.getUserId() + "/join/" + testCrib.getCribId(), null, Crib.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }

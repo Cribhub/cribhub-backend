@@ -7,7 +7,7 @@ import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.services.CustomerServiceImpl;
 import com.cribhub.backend.services.intefaces.CribService;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +41,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void createCustomerTest() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
+    public void createCustomerTest() throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
         Customer customer = new Customer();
         customer.setPassword("password");
 
@@ -78,7 +78,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void joinCribTest() throws CustomerNotFoundException, CribNotFoundException {
+    public void joinCribTest() throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
         Crib crib = new Crib();
         Customer customer = new Customer();
 
@@ -96,7 +96,8 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void joinCribTest_NotFound() throws CustomerNotFoundException, CribNotFoundException {
+    public void joinCribTest_NotFound()
+            throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
         // Test when crib is null
         when(cribService.getCribById(1L)).thenReturn(null);
         ResponseEntity<Crib> result = customerController.joinCrib(1L, 1L);

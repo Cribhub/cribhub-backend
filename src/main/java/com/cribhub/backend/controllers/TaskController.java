@@ -23,10 +23,12 @@ public class TaskController {
     }
 
     @PostMapping("/{customerId}/{cribId}")
-    public ResponseEntity<TaskDTO> createTask(@PathVariable Long cribId, @PathVariable Long customerId, @RequestBody Task task) {
-        Task savedTaskList = taskService.createTask(cribId, customerId, task );
+    public ResponseEntity<TaskDTO> createTask(@PathVariable Long cribId, @PathVariable Long customerId,
+            @RequestBody Task task) {
+        Task savedTaskList = taskService.createTask(cribId, customerId, task);
 
-       log.info("Task created: id-{} name-{} description-{}", savedTaskList.getTaskId(), savedTaskList.getTitle(), savedTaskList.getDescription());
+        log.info("Task created: id-{} name-{} description-{}", savedTaskList.getTaskId(), savedTaskList.getTitle(),
+                savedTaskList.getDescription());
         return ResponseEntity.status(HttpStatus.CREATED).body(TaskDTO.TaskUpdateDTO(savedTaskList));
 
     }
@@ -34,7 +36,7 @@ public class TaskController {
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long taskId) {
         Task task = taskService.getTaskById(taskId);
-        if (task == null){
+        if (task == null) {
             log.error("Task with id {} not found", taskId);
             return ResponseEntity.notFound().build();
         }

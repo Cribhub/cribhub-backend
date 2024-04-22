@@ -2,7 +2,9 @@ package com.cribhub.backend.controller;
 
 import com.cribhub.backend.controllers.CribController;
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.dto.CreateCribDTO;
 import com.cribhub.backend.dto.CribDTO;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.services.intefaces.CribService;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,11 +32,13 @@ public class CribControllerTests {
     }
 
     @Test
-    public void createCribTest() {
+    public void createCribTest() throws CribNameAlreadyTakenException {
         Crib crib = new Crib();
         when(cribService.saveCrib(crib)).thenReturn(crib);
 
-        ResponseEntity<CribDTO> result = cribController.createCrib(crib);
+        CreateCribDTO dto = new CreateCribDTO("testCrib");
+
+        ResponseEntity<CribDTO> result = cribController.createCrib(dto);
 
         assertNotNull(result);
         assertEquals(201, result.getStatusCodeValue());

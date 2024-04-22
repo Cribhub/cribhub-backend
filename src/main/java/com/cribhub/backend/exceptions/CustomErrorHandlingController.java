@@ -80,4 +80,16 @@ class CustomErrorHandlingController {
         log.error("Username already taken: {}", e.getMessage());
         return error;
     }
+
+    @ExceptionHandler(CribNameAlreadyTakenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    CustomErrorResponse onCribNameAlreadyTakenException(CribNameAlreadyTakenException e) {
+        CustomErrorResponse error = new CustomErrorResponse();
+        error.getErrors().add(
+                new CustomError("Cribname", e.getMessage()));
+
+        log.error("Cribname already taken: {}", e.getMessage());
+        return error;
+    }
 }

@@ -1,6 +1,7 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.repositories.CribRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ public class CribServiceTests {
     }
 
     @Test
-    public void testSaveCrib() {
+    public void testSaveCrib() throws CribNameAlreadyTakenException {
         Crib crib = new Crib();
         when(cribRepository.save(crib)).thenReturn(crib);
 

@@ -1,6 +1,7 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.services.intefaces.CribService;
@@ -17,7 +18,11 @@ public class CribServiceImpl implements CribService {
     }
 
     @Override
-    public Crib saveCrib(Crib crib) {
+    public Crib saveCrib(Crib crib) throws CribNameAlreadyTakenException {
+        if (cribRepository.findByName(crib.getName()).isPresent()) {
+            throw new CribNameAlreadyTakenException(crib.getName());
+        }
+
         return cribRepository.save(crib);
     }
 

@@ -21,7 +21,8 @@ public class TaskServiceImpl implements TaskService {
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, CribRepository cribRepository, CustomerRepository customerRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, CribRepository cribRepository,
+            CustomerRepository customerRepository) {
         this.taskRepository = taskRepository;
         this.cribRepository = cribRepository;
         this.customerRepository = customerRepository;

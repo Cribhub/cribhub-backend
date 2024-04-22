@@ -8,18 +8,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomerUpdateDTO {
-    private String userName;
+  private String userName;
 
-    @Email
-    private String email;
+  @Email
+  private String email;
 
-    @Size(min = 8)
-    private String password;
+  @Size(min = 8)
+  private String password;
 
-    public CustomerUpdateDTO(String name, String mail, String password) {
-        this.userName = name;
-        this.email = mail;
-        this.password = password;
-    }
+  public CustomerUpdateDTO(String name, String mail, String password) {
+    this.userName = name;
+    this.email = mail;
+    this.password = password;
+  }
 
 }
