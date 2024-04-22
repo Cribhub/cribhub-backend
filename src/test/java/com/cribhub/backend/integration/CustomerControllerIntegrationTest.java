@@ -3,9 +3,10 @@ package com.cribhub.backend.integration;
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.dto.CustomerDTO;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
-import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.services.intefaces.CribService;
 import com.cribhub.backend.services.intefaces.CustomerService;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +41,8 @@ public class CustomerControllerIntegrationTest {
     private Crib testCrib;
 
     @BeforeEach
-    public void setup() throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
+    public void setup()
+            throws EmailAlreadyInUseException, UsernameAlreadyTakenException, CribNameAlreadyTakenException {
         testCustomer = new Customer();
         testCustomer.setUserName("TestCustomer");
         testCustomer.setEmail("test@testmail.com");

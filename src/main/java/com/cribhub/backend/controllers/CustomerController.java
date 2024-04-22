@@ -7,6 +7,7 @@ import com.cribhub.backend.dto.CustomerUpdateDTO;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.services.CustomerServiceImpl;
 import com.cribhub.backend.services.intefaces.CribService;
@@ -35,7 +36,7 @@ public class CustomerController {
 
     @PostMapping("/customer")
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid Customer customer)
-            throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
+            throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         customerService.createCustomer(customer);
 
         log.info("Customer created: id-{} name-{} email-{}", customer.getUserId(), customer.getUserName(),

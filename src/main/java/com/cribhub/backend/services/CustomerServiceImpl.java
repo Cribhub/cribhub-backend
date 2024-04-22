@@ -3,6 +3,7 @@ package com.cribhub.backend.services;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
@@ -41,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer createCustomer(Customer customer) throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
+    public Customer createCustomer(Customer customer) throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         // Check if user already exists
         String email = customer.getEmail();
         String userName = customer.getUserName();
@@ -51,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if (customerRepository.findByUserName(userName).isPresent()) {
-            throw new CribNameAlreadyTakenException(userName);
+            throw new UsernameAlreadyTakenException(userName);
         }
 
         // Hash the password before saving

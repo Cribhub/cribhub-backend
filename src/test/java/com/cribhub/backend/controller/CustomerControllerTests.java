@@ -7,6 +7,7 @@ import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
+import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.services.CustomerServiceImpl;
 import com.cribhub.backend.services.intefaces.CribService;
@@ -41,7 +42,7 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void createCustomerTest() throws EmailAlreadyInUseException, CribNameAlreadyTakenException {
+    public void createCustomerTest() throws EmailAlreadyInUseException, UsernameAlreadyTakenException {
         Customer customer = new Customer();
         customer.setPassword("password");
 
