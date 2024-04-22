@@ -4,7 +4,6 @@ import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
-import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
 import com.cribhub.backend.services.intefaces.CustomerService;

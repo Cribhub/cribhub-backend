@@ -1,15 +1,21 @@
 package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.dto.CribDTO;
 import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.services.intefaces.CribService;
 import jakarta.validation.constraints.Min;
 import com.cribhub.backend.dto.CreateCribDTO;
+import com.cribhub.backend.dto.CustomerDTO;
 
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -52,5 +58,16 @@ public class CribController {
 
         log.warn("Crib with id {} deleted", cribId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{cribId}/members")
+    public ResponseEntity<List<CustomerDTO>> getCribMembers(@PathVariable @Min(1) long cribId)
+            throws CribNotFoundException {
+        List<Customer> members = cribService.getMembers(cribId);
+        List<CustomerDTO> response = members.stream().map(customer -> CustomerDTO.ConvertToDTO(customer))
+                .collect(Collectors.toList());
+
+        log.info("Retrieved members for crib with id {}", cribId);
+        return ResponseEntity.ok(response);
     }
 }

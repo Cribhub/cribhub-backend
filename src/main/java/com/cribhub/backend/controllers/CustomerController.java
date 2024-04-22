@@ -1,6 +1,5 @@
 package com.cribhub.backend.controllers;
 
-import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.dto.CustomerUpdateDTO;

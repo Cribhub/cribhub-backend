@@ -81,7 +81,7 @@ public class CribServiceImpl implements CribService {
 
         if (crib == null) {
             log.error("Could not find crib with id {} when trying to add customer with id {}", cribId, customerId);
-            throw new CribNotFoundException(customerId);
+            throw new CribNotFoundException(cribId);
         }
 
         customer.setCrib(crib);
@@ -89,5 +89,17 @@ public class CribServiceImpl implements CribService {
 
         customerRepository.save(customer);
         cribRepository.save(crib);
+    }
+
+    @Override
+    public List<Customer> getMembers(Long cribId) throws CribNotFoundException {
+        Crib crib = cribRepository.findById(cribId).orElse(null);
+
+        if (crib == null) {
+            log.error("Could not find crib with id {} when trying to get it's members", cribId);
+            throw new CribNotFoundException(cribId);
+        }
+
+        return crib.getCribMembers();
     }
 }
