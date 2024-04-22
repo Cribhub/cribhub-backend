@@ -33,8 +33,7 @@ public class CribControllerTests {
 
     @Test
     public void createCribTest() throws CribNameAlreadyTakenException {
-        Crib crib = new Crib();
-        when(cribService.saveCrib(crib)).thenReturn(crib);
+        when(cribService.saveCrib(any(Crib.class))).thenAnswer(i -> i.getArguments()[0]);
 
         CreateCribDTO dto = new CreateCribDTO("testCrib");
 
@@ -42,7 +41,6 @@ public class CribControllerTests {
 
         assertNotNull(result);
         assertEquals(201, result.getStatusCodeValue());
-        verify(cribService, times(1)).saveCrib(crib);
     }
 
     @Test

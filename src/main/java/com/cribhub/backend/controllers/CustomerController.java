@@ -72,26 +72,13 @@ public class CustomerController {
     }
 
     @PostMapping("customer/{customerId}/join/{cribId}")
-    public ResponseEntity<Crib> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId)
+    public ResponseEntity<Void> joinCrib(@PathVariable Long cribId, @PathVariable Long customerId)
             throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
-        Crib crib = cribService.getCribById(cribId);
-        if (crib == null) {
-            log.error("Could not join crib with id {} because it does not exist", cribId);
-            return ResponseEntity.notFound().build();
-        }
 
-        Customer customer = customerService.getCustomerById(customerId);
-        if (customer == null) {
-            log.error("Could not join crib with cribId {} because customer with customerId {} does not exist", cribId,
-                    customerId);
-            return ResponseEntity.notFound().build();
-        }
-        customer.setCrib(crib);
-        crib.getCribMembers().add(customer);
-        Crib updatedCrib = cribService.saveCrib(crib);
+        cribService.addMember(cribId, customerId);
 
         log.info("Customer with id {} joined crib with id {}", customerId, cribId);
-        return ResponseEntity.ok(updatedCrib);
+        return ResponseEntity.ok().build();
     }
 
 }

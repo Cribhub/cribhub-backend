@@ -17,9 +17,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -87,31 +89,26 @@ public class CustomerControllerTests {
         when(customerService.getCustomerById(1L)).thenReturn(customer);
         when(cribService.saveCrib(crib)).thenReturn(crib);
 
-        ResponseEntity<Crib> result = customerController.joinCrib(1L, 1L);
+        ResponseEntity<Void> result = customerController.joinCrib(1L, 1L);
 
-        assertNotNull(result);
-        assertEquals(crib, result.getBody());
-        verify(cribService, times(1)).getCribById(1L);
-        verify(customerService, times(1)).getCustomerById(1L);
-        verify(cribService, times(1)).saveCrib(crib);
+        assertEquals(HttpStatusCode.valueOf(200), result.getStatusCode());
+        verify(cribService, times(1)).addMember(1L, 1L);
     }
 
     @Test
-    public void joinCribTest_NotFound()
+    public void joinCribTest_CustomerNotFound()
             throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
-        // Test when crib is null
-        when(cribService.getCribById(1L)).thenReturn(null);
-        ResponseEntity<Crib> result = customerController.joinCrib(1L, 1L);
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        // Test when customer not found
+        doThrow(new CustomerNotFoundException(1L)).when(cribService).addMember(1L, 1L);
 
-        // Reset mock to test when customer is null
-        reset(cribService);
+        assertThrows(CustomerNotFoundException.class, () -> customerController.joinCrib(1L, 1L));
+    }
 
-        // Test when customer is null
-        Crib crib = new Crib();
-        when(cribService.getCribById(1L)).thenReturn(crib);
-        when(customerService.getCustomerById(1L)).thenReturn(null);
-        result = customerController.joinCrib(1L, 1L);
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+    @Test
+    public void joinCribTest_CribNotFound()
+            throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
+        // Test when crib not found
+        doThrow(new CribNotFoundException(1L)).when(cribService).addMember(1L, 1L);
+        assertThrows(CribNotFoundException.class, () -> customerController.joinCrib(1L, 1L));
     }
 }
