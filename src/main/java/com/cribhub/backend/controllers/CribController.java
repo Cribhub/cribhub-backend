@@ -2,15 +2,13 @@ package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.domain.Task;
-import com.cribhub.backend.dto.CribDTO;
+import com.cribhub.backend.dto.*;
 import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.services.intefaces.CribService;
 import jakarta.validation.constraints.Min;
-import com.cribhub.backend.dto.CreateCribDTO;
-import com.cribhub.backend.dto.CustomerDTO;
-import com.cribhub.backend.dto.TaskDTO;
 
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
@@ -65,6 +63,19 @@ public class CribController {
 
         log.info("Tasks for crib with id {} retrieved", cribId);
         return ResponseEntity.ok(taskDTOs);
+    }
+
+    @GetMapping("/{cribId}/shoppingListItems")
+    public ResponseEntity<List<ShoppingListItemDTO>> getShoppingListItemsByCribId(@PathVariable long cribId) throws CribNotFoundException {
+        Crib crib = cribService.getCribById(cribId);
+
+        List<ShoppingListItem> shoppingListItems = crib.getShoppingList();
+        List<ShoppingListItemDTO> shoppingListItemDTOs = shoppingListItems.stream()
+                .map(ShoppingListItemDTO::ConvertToDTO)
+                .collect(Collectors.toList());
+
+        log.info("Shopping list items for crib with id {} retrieved", cribId);
+        return ResponseEntity.ok(shoppingListItemDTOs);
     }
 
     @DeleteMapping("/{cribId}")
