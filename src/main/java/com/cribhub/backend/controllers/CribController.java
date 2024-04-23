@@ -2,6 +2,7 @@ package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.dto.CribDTO;
 import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
 import com.cribhub.backend.exceptions.CribNotFoundException;
@@ -9,6 +10,7 @@ import com.cribhub.backend.services.intefaces.CribService;
 import jakarta.validation.constraints.Min;
 import com.cribhub.backend.dto.CreateCribDTO;
 import com.cribhub.backend.dto.CustomerDTO;
+import com.cribhub.backend.dto.TaskDTO;
 
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
@@ -50,6 +52,19 @@ public class CribController {
 
         log.info("Crib with id {} retrieved", cribId);
         return ResponseEntity.ok(CribDTO.ConvertToCribDTO(crib));
+    }
+
+    @GetMapping("/{cribId}/tasks")
+    public ResponseEntity<List<TaskDTO>> getCribTasksById(@PathVariable long cribId) throws CribNotFoundException {
+        Crib crib = cribService.getCribById(cribId);
+
+        List<Task> tasks = crib.getTasks();
+        List<TaskDTO> taskDTOs = tasks.stream()
+                .map(TaskDTO::TaskUpdateDTO)
+                .collect(Collectors.toList());
+
+        log.info("Tasks for crib with id {} retrieved", cribId);
+        return ResponseEntity.ok(taskDTOs);
     }
 
     @DeleteMapping("/{cribId}")
