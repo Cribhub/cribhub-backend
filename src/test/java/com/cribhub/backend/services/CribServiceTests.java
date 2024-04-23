@@ -1,7 +1,11 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
+import com.cribhub.backend.exceptions.CribNameAlreadyTakenException;
+import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.repositories.CribRepository;
+import com.cribhub.backend.repositories.CustomerRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,16 +20,18 @@ import static org.mockito.Mockito.*;
 
 public class CribServiceTests {
     private CribRepository cribRepository;
+    private CustomerRepository customerRepository;
     private CribServiceImpl cribService;
 
     @BeforeEach
     public void setUp() {
         cribRepository = Mockito.mock(CribRepository.class);
-        cribService = new CribServiceImpl(cribRepository);
+        customerRepository = Mockito.mock(CustomerRepository.class);
+        cribService = new CribServiceImpl(cribRepository, customerRepository);
     }
 
     @Test
-    public void testSaveCrib() {
+    public void testSaveCrib() throws CribNameAlreadyTakenException {
         Crib crib = new Crib();
         when(cribRepository.save(crib)).thenReturn(crib);
 
@@ -36,14 +42,14 @@ public class CribServiceTests {
     }
 
     @Test
-    public void testGetCribById() {
+    public void testGetCribById() throws CribNotFoundException {
         Crib crib = new Crib();
         when(cribRepository.findById(1L)).thenReturn(Optional.of(crib));
 
         Crib foundCrib = cribService.getCribById(1L);
 
         assertNotNull(foundCrib);
-        verify(cribRepository, times(1)).findById(1L);
+        verify(cribRepository, times(2)).findById(1L);
     }
 
     @Test

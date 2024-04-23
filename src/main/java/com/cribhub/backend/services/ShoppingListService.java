@@ -1,6 +1,5 @@
 package com.cribhub.backend.services;
 
-
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.repositories.CribRepository;

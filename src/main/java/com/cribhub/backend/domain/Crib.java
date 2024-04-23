@@ -36,14 +36,11 @@ public class Crib {
         this.cribMembers = new ArrayList<>();
     }
 
-    public Crib(String name, List<Customer> cribMembers, List<ShoppingListItem> shoppingList, List<Task> tasks){
+    public Crib(String name, List<Customer> cribMembers, List<ShoppingListItem> shoppingList, List<Task> tasks) {
         this.name = name;
         this.cribMembers = cribMembers;
         this.shoppingList = shoppingList;
         this.tasks = tasks;
     }
 
-
-
 }
-

@@ -1,4 +1,4 @@
-package com.cribhub.backend.controllers.exceptions;
+package com.cribhub.backend.exceptions;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
@@ -78,6 +78,18 @@ class CustomErrorHandlingController {
                 new CustomError("Username", e.getMessage()));
 
         log.error("Username already taken: {}", e.getMessage());
+        return error;
+    }
+
+    @ExceptionHandler(CribNameAlreadyTakenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    CustomErrorResponse onCribNameAlreadyTakenException(CribNameAlreadyTakenException e) {
+        CustomErrorResponse error = new CustomErrorResponse();
+        error.getErrors().add(
+                new CustomError("Cribname", e.getMessage()));
+
+        log.error("Cribname already taken: {}", e.getMessage());
         return error;
     }
 }

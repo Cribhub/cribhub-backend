@@ -1,4 +1,4 @@
-package com.cribhub.backend.controllers.exceptions;
+package com.cribhub.backend.exceptions;
 
 public class UsernameAlreadyTakenException extends Throwable {
     public UsernameAlreadyTakenException(String userName) {
