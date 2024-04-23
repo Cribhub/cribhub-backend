@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Entity
 @Setter
+@Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
