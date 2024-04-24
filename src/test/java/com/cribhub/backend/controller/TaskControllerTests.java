@@ -32,6 +32,7 @@ public class TaskControllerTests {
     @Test
     public void createTaskTest() {
         Task task = new Task();
+        task.setCompleted(false);
         TaskDTO taskDTO = TaskDTO.TaskUpdateDTO(task);
 
         when(taskService.createTask(1L, 1L, task)).thenReturn(task);

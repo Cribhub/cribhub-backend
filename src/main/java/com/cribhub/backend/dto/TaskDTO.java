@@ -4,6 +4,8 @@ import com.cribhub.backend.domain.Task;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 public class TaskDTO {
@@ -15,6 +17,10 @@ public class TaskDTO {
 
     private String description;
 
+    private LocalDate deadlineDate;
+
+    private Boolean completed;
+
     private Long customerId;
 
     public static TaskDTO TaskUpdateDTO (Task task) {
@@ -22,6 +28,8 @@ public class TaskDTO {
         dto.setTaskId(task.getTaskId());
         dto.setTaskName(task.getTitle());
         dto.setDescription(task.getDescription());
+        dto.setCompleted(task.getCompleted());
+        dto.setDeadlineDate(task.getDeadlineDate());
         if (task.getCrib() != null) {
             dto.setCribId(task.getCrib().getCribId());
         }
