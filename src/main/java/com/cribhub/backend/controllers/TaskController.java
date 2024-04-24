@@ -29,6 +29,7 @@ public class TaskController {
     @PostMapping("/{customerId}/{cribId}")
     public ResponseEntity<TaskDTO> createTask(@PathVariable Long cribId, @PathVariable Long customerId,
             @RequestBody Task task) {
+        task.setCompleted(false);
         Task savedTaskList = taskService.createTask(cribId, customerId, task);
 
         log.info("Task created: id-{} name-{} description-{}", savedTaskList.getTaskId(), savedTaskList.getTitle(),
