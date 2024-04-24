@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,10 @@ public class Task {
 
     private String description;
 
+    private Boolean completed;
+
+    private LocalDate deadlineDate;
+
     @ManyToOne
     private Customer customer;
 
@@ -26,9 +32,11 @@ public class Task {
 
     public Task(){}
 
-    public Task(String taskName, String description, Customer customer, Crib crib){
+    public Task(String taskName, String description, Boolean completed, LocalDate deadlineDate, Customer customer, Crib crib){
         this.title = taskName;
         this.description = description;
+        this.completed = completed;
+        this.deadlineDate = deadlineDate;
         this.customer = customer;
         this.crib = crib;
     }

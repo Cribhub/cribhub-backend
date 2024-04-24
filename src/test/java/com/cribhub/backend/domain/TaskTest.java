@@ -3,6 +3,8 @@ package com.cribhub.backend.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -44,6 +46,15 @@ public class TaskTest {
     }
 
     @Test
+    public void testDeadlineDate(){
+        LocalDate deadlineDate = LocalDate.of(2024, 4, 30);
+        task.setDeadlineDate(deadlineDate);
+        assertEquals(deadlineDate, task.getDeadlineDate());
+    }
+
+
+
+    @Test
     public void testCustomerTask() {
         Customer customer = new Customer();
         task.setCustomer(customer);
@@ -55,8 +66,10 @@ public class TaskTest {
         Crib crib = new Crib();
         String name = "Test Task";
         String description = "This is a test task";
+        LocalDate deadlineDate = LocalDate.of(2024, 4, 30);
+        Boolean completed = false;
         Customer customer = new Customer();
-        Task task = new Task(name, description, customer, crib);
+        Task task = new Task(name, description, completed, deadlineDate, customer, crib);
         assertNotNull(task);
         assertEquals(crib, task.getCrib());
         assertEquals(name, task.getTitle());
