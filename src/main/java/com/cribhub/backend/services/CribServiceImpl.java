@@ -92,6 +92,28 @@ public class CribServiceImpl implements CribService {
     }
 
     @Override
+    public void removeMember(Long cribId, Long customerId) throws CribNotFoundException, CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        Crib crib = cribRepository.findById(cribId).orElse(null);
+
+        if (customer == null) {
+            log.error("Could not find customer with id {} when trying to join crib with id {}", customerId, cribId);
+            throw new CustomerNotFoundException(customerId);
+        }
+
+        if (crib == null) {
+            log.error("Could not find crib with id {} when trying to add customer with id {}", cribId, customerId);
+            throw new CribNotFoundException(cribId);
+        }
+
+        customer.setCrib(null);
+        crib.getCribMembers().remove(customer);
+
+        customerRepository.save(customer);
+        cribRepository.save(crib);
+    }
+
+    @Override
     public List<Customer> getMembers(Long cribId) throws CribNotFoundException {
         Crib crib = cribRepository.findById(cribId).orElse(null);
 
