@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +46,8 @@ public class TaskServiceImpl implements TaskService {
         notification.setName("Task created: " + task.getTitle());
         notification.setDescription(task.getDescription());
         notificationRepostitory.save(notification);
+
+        customer.getNotifications().add(notification);
 
         task.setCrib(crib);
         task.setCustomer(customer);

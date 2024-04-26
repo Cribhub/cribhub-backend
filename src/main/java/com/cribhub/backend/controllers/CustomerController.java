@@ -1,8 +1,13 @@
 package com.cribhub.backend.controllers;
 
+import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.domain.Notification;
+import com.cribhub.backend.domain.ShoppingListItem;
 import com.cribhub.backend.dto.CustomerDTO;
 import com.cribhub.backend.dto.CustomerUpdateDTO;
+import com.cribhub.backend.dto.NotificationDTO;
+import com.cribhub.backend.dto.ShoppingListItemDTO;
 import com.cribhub.backend.exceptions.CribNotFoundException;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
@@ -18,6 +23,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Validated
@@ -78,6 +86,19 @@ public class CustomerController {
 
         log.info("Customer with id {} joined crib with id {}", customerId, cribId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("customer/{customerId}/notifications")
+    public ResponseEntity<List<NotificationDTO>> getNotificationsByCustomerId(@PathVariable long customerId) throws CustomerNotFoundException {
+        Customer customer = customerService.getCustomerById(customerId);
+
+        List<Notification> notifications = customer.getNotifications();
+        List<NotificationDTO> notificationDTOs = notifications.stream()
+                .map(NotificationDTO::ConvertToDTO)
+                .collect(Collectors.toList());
+
+        log.info("Notifications for customer with id {} retrieved", customerId);
+        return ResponseEntity.ok(notificationDTOs);
     }
 
     @PostMapping("customer/{customerId}/leave/{cribId}")

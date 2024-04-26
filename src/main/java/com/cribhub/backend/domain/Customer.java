@@ -35,6 +35,9 @@ public class Customer {
     @OneToMany
     private List<Task> tasks;
 
+    @OneToMany
+    private List<Notification> notifications;
+
     public Customer() {
     }
 
@@ -44,6 +47,7 @@ public class Customer {
         this.password = password;
         this.crib = crib;
         this.tasks = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public void setCrib(Crib crib) {
