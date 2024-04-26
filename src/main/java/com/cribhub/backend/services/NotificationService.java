@@ -43,6 +43,8 @@ public class NotificationService {
     }
 
     public void deleteNotification(Long id) {
+        Customer customer = notificationRepostitory.findById(id).get().getCustomer();
+        customer.getNotifications().remove(notificationRepostitory.findById(id).get());
         notificationRepostitory.deleteById(id);
     }
 }
