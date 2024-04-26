@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -39,7 +40,7 @@ public class ShoppingListItemControllerTests {
         ResponseEntity<ShoppingListItemDTO> result = shoppingListController.getShoppingListById(1L);
 
         assertNotNull(result);
-        assertEquals(shoppingListItem, result.getBody());
+        assertThat(result.getBody()).isEqualToComparingFieldByField(ShoppingListItemDTO.ConvertToDTO(shoppingListItem));
         verify(shoppingListService, times(1)).getShoppingListById(1L);
     }
 
@@ -52,7 +53,7 @@ public class ShoppingListItemControllerTests {
         ResponseEntity<ShoppingListItemDTO> result = shoppingListController.createShoppingListForCrib(1L, shoppingListItem);
 
         assertNotNull(result);
-        assertEquals(shoppingListItem, result.getBody());
+        assertThat(result.getBody()).isEqualToComparingFieldByField(ShoppingListItemDTO.ConvertToDTO(shoppingListItem));
         verify(shoppingListService, times(1)).createShoppingListForCrib(1L, shoppingListItem);
     }
 
@@ -66,7 +67,7 @@ public class ShoppingListItemControllerTests {
         ResponseEntity<ShoppingListItemDTO> result = shoppingListController.updateShoppingList(1L, shoppingListItem);
 
         assertNotNull(result);
-        assertEquals(shoppingListItem, result.getBody());
+        assertThat(result.getBody()).isEqualToComparingFieldByField(ShoppingListItemDTO.ConvertToDTO(shoppingListItem));
         verify(shoppingListService, times(1)).getShoppingListById(1L);
         verify(shoppingListService, times(1)).createOrUpdateShoppingList(shoppingListItem);
     }
