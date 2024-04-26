@@ -1,8 +1,11 @@
 package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.Notification;
+import com.cribhub.backend.domain.ShoppingListItem;
+import com.cribhub.backend.dto.NotificationDTO;
 import com.cribhub.backend.services.NotificationService;
 import lombok.extern.log4j.Log4j2;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +26,7 @@ public class NotificationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Notification> getNotificationById(@PathVariable Long id) {
+    public ResponseEntity<NotificationDTO> getNotificationById(@PathVariable Long id) {
         Optional<Notification> notificationOptional = notificationService.getNotificationById(id);
 
         // If the notification is not found, return a 404 Not Found response
@@ -33,11 +36,12 @@ public class NotificationController {
         }
 
         log.info("Notification retrieved: id-{} message-{}", id, notificationOptional.get().getName());
-        return ResponseEntity.ok(notificationOptional.get());
+        return ResponseEntity.ok(NotificationDTO.ConvertToDTO(notificationOptional.get()));
     }
 
+
     @PostMapping("customer/{customerId}")
-    public ResponseEntity<Notification> createNotificationForCustomer(@PathVariable Long customerId,
+    public ResponseEntity<NotificationDTO> createNotificationForCustomer(@PathVariable Long customerId,
             @RequestBody Notification notification) {
         Optional<Notification> savedNotification = notificationService.createNotificationForCustomer(customerId,
                 notification);
@@ -52,6 +56,33 @@ public class NotificationController {
 
         log.info("Notification created: id-{} message-{}", savedNotification.get().getId(),
                 savedNotification.get().getName());
-        return ResponseEntity.ok(savedNotification.get());
+        return ResponseEntity.ok(NotificationDTO.ConvertToDTO(savedNotification.get()));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NotificationDTO> updateNotification(@PathVariable Long id,
+            @RequestBody Notification notification) {
+        log.info("Updating notification with id {}", id);
+        Optional<Notification> notificationOptional = notificationService.getNotificationById(id);
+
+        if (notificationOptional.isEmpty()) {
+            log.error("Can not update notification with id {} because it does not exist.", id);
+            return ResponseEntity.notFound().build();
+        }
+
+        Notification existingNotification = notificationOptional.get();
+        existingNotification.setIsRead(notification.getIsRead());
+
+        Notification updatedNotification = notificationService.createOrUpdateNotification(existingNotification);
+
+        log.info("Notification updated: id-{} name-{}", id, updatedNotification.getName());
+        return ResponseEntity.ok(NotificationDTO.ConvertToDTO(updatedNotification));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteShoppingList(@PathVariable Long id) {
+        notificationService.deleteNotification(id);
+        log.warn("Notification with id {} deleted", id);
+        return ResponseEntity.noContent().build();
     }
 }

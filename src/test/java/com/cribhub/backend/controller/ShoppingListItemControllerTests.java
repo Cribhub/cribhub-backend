@@ -2,6 +2,7 @@ package com.cribhub.backend.controller;
 
 import com.cribhub.backend.controllers.ShoppingListController;
 import com.cribhub.backend.domain.ShoppingListItem;
+import com.cribhub.backend.dto.ShoppingListItemDTO;
 import com.cribhub.backend.services.ShoppingListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class ShoppingListItemControllerTests {
 
         when(shoppingListService.getShoppingListById(1L)).thenReturn(Optional.of(shoppingListItem));
 
-        ResponseEntity<ShoppingListItem> result = shoppingListController.getShoppingListById(1L);
+        ResponseEntity<ShoppingListItemDTO> result = shoppingListController.getShoppingListById(1L);
 
         assertNotNull(result);
         assertEquals(shoppingListItem, result.getBody());
@@ -48,7 +49,7 @@ public class ShoppingListItemControllerTests {
 
         when(shoppingListService.createShoppingListForCrib(1L, shoppingListItem)).thenReturn(Optional.of(shoppingListItem));
 
-        ResponseEntity<ShoppingListItem> result = shoppingListController.createShoppingListForCrib(1L, shoppingListItem);
+        ResponseEntity<ShoppingListItemDTO> result = shoppingListController.createShoppingListForCrib(1L, shoppingListItem);
 
         assertNotNull(result);
         assertEquals(shoppingListItem, result.getBody());
@@ -62,7 +63,7 @@ public class ShoppingListItemControllerTests {
         when(shoppingListService.getShoppingListById(1L)).thenReturn(Optional.of(shoppingListItem));
         when(shoppingListService.createOrUpdateShoppingList(shoppingListItem)).thenReturn(shoppingListItem);
 
-        ResponseEntity<ShoppingListItem> result = shoppingListController.updateShoppingList(1L, shoppingListItem);
+        ResponseEntity<ShoppingListItemDTO> result = shoppingListController.updateShoppingList(1L, shoppingListItem);
 
         assertNotNull(result);
         assertEquals(shoppingListItem, result.getBody());

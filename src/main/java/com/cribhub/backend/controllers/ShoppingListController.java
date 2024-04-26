@@ -1,6 +1,7 @@
 package com.cribhub.backend.controllers;
 
 import com.cribhub.backend.domain.ShoppingListItem;
+import com.cribhub.backend.dto.ShoppingListItemDTO;
 import com.cribhub.backend.services.ShoppingListService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ShoppingListController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShoppingListItem> getShoppingListById(@PathVariable Long id) {
+    public ResponseEntity<ShoppingListItemDTO> getShoppingListById(@PathVariable Long id) {
         Optional<ShoppingListItem> shoppingListOptional = shoppingListService.getShoppingListById(id);
 
         // If the shopping list is not found, return a 404 Not Found response
@@ -33,11 +34,11 @@ public class ShoppingListController {
         }
 
         log.info("Shopping list item retrieved: id-{} name-{}", id, shoppingListOptional.get().getName());
-        return ResponseEntity.ok(shoppingListOptional.get());
+        return ResponseEntity.ok(ShoppingListItemDTO.ConvertToDTO(shoppingListOptional.get()));
     }
 
     @PostMapping("crib/{cribId}")
-    public ResponseEntity<ShoppingListItem> createShoppingListForCrib(@PathVariable Long cribId,
+    public ResponseEntity<ShoppingListItemDTO> createShoppingListForCrib(@PathVariable Long cribId,
             @RequestBody ShoppingListItem shoppingListItem) {
         Optional<ShoppingListItem> savedShoppingList = shoppingListService.createShoppingListForCrib(cribId,
                 shoppingListItem);
@@ -52,12 +53,12 @@ public class ShoppingListController {
 
         log.info("Shopping list item created: id-{} name-{}", savedShoppingList.get().getId(),
                 savedShoppingList.get().getName());
-        return ResponseEntity.ok(savedShoppingList.get());
+        return ResponseEntity.ok(ShoppingListItemDTO.ConvertToDTO(savedShoppingList.get()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ShoppingListItem> updateShoppingList(@PathVariable Long id,
-            @RequestBody ShoppingListItem shoppingListItem) {
+    public ResponseEntity<ShoppingListItemDTO> updateShoppingList(@PathVariable Long id,
+                                                                  @RequestBody ShoppingListItem shoppingListItem) {
         log.info("Updating shopping list with id {}", id);
 
         // Check if the shopping list item exists
@@ -74,7 +75,7 @@ public class ShoppingListController {
         ShoppingListItem updatedShoppingListItem = shoppingListService.createOrUpdateShoppingList(existingList);
 
         log.info("Shopping list item updated: id-{} name-{}", id, updatedShoppingListItem.getName());
-        return ResponseEntity.ok(updatedShoppingListItem);
+        return ResponseEntity.ok(ShoppingListItemDTO.ConvertToDTO(updatedShoppingListItem));
     }
 
     @DeleteMapping("/{id}")

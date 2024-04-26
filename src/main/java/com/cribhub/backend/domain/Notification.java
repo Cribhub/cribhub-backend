@@ -18,15 +18,18 @@ public class Notification {
 
     private String description;
 
+    private Boolean isRead = false;
+
     @ManyToOne
     private Customer customer;
 
     public Notification(){}
 
-    public Notification(String name, String description, Customer customer) {
+    public Notification(String name, String description, Customer customer, Boolean isRead) {
         this.name = name;
         this.description = description;
         this.customer = customer;
+        this.isRead = isRead;
     }
 }
 
