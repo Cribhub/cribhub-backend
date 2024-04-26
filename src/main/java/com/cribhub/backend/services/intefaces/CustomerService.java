@@ -15,4 +15,6 @@ public interface CustomerService {
     Customer updateCustomer(Long id, Customer customer) throws CustomerNotFoundException;
 
     void deleteCustomer(Long id) throws CustomerNotFoundException;
+
+    void updateAllNotificationsForCustomer(long customerId) throws CustomerNotFoundException;
 }
