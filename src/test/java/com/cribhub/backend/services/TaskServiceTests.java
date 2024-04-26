@@ -5,6 +5,7 @@ import com.cribhub.backend.domain.Customer;
 import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
+import com.cribhub.backend.repositories.NotificationRepostitory;
 import com.cribhub.backend.repositories.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,8 @@ public class TaskServiceTests {
 
     @InjectMocks
     TaskServiceImpl taskService;
+    @Mock
+    NotificationRepostitory notificationRepostitory;
 
     @Mock
     TaskRepository taskRepository;
@@ -46,6 +49,8 @@ public class TaskServiceTests {
         when(cribRepository.findById(1L)).thenReturn(Optional.of(crib));
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(taskRepository.save(task)).thenReturn(task);
+
+        //when(notificationRepostitory.save(any())).thenReturn(new Task().getDescription());
 
         Task result = taskService.createTask(1L, 1L, task);
 

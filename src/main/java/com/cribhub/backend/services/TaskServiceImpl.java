@@ -2,9 +2,11 @@ package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.domain.Notification;
 import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
+import com.cribhub.backend.repositories.NotificationRepostitory;
 import com.cribhub.backend.repositories.TaskRepository;
 import com.cribhub.backend.services.intefaces.TaskService;
 import jakarta.transaction.Transactional;
@@ -20,12 +22,15 @@ public class TaskServiceImpl implements TaskService {
     private final CribRepository cribRepository;
     private final CustomerRepository customerRepository;
 
+    private final NotificationRepostitory notificationRepostitory;
+
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository, CribRepository cribRepository,
-            CustomerRepository customerRepository) {
+            CustomerRepository customerRepository, NotificationRepostitory notificationRepostitory) {
         this.taskRepository = taskRepository;
         this.cribRepository = cribRepository;
         this.customerRepository = customerRepository;
+        this.notificationRepostitory = notificationRepostitory;
     }
 
     @Transactional
@@ -34,6 +39,12 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new RuntimeException("Crib not found with id " + cribId));
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
+
+        Notification notification = new Notification();
+        notification.setCustomer(customer);
+        notification.setName("Task created: " + task.getTitle());
+        notification.setDescription(task.getDescription());
+        notificationRepostitory.save(notification);
 
         task.setCrib(crib);
         task.setCustomer(customer);
