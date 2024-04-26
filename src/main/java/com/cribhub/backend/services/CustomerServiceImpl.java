@@ -1,6 +1,7 @@
 package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.domain.Notification;
 import com.cribhub.backend.exceptions.CustomerNotFoundException;
 import com.cribhub.backend.exceptions.EmailAlreadyInUseException;
 import com.cribhub.backend.exceptions.UsernameAlreadyTakenException;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -104,5 +106,21 @@ public class CustomerServiceImpl implements CustomerService {
 
         // Delete the user
         customerRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateAllNotificationsForCustomer(long customerId) throws CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        if (customer == null) {
+            throw new CustomerNotFoundException(customerId);
+        }
+
+        List<Notification> notifications = customer.getNotifications();
+        for (Notification notification : notifications) {
+            notification.setIsRead(true);
+        }
+
+        customerRepository.save(customer);
+
     }
 }

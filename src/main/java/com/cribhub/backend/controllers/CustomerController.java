@@ -101,6 +101,14 @@ public class CustomerController {
         return ResponseEntity.ok(notificationDTOs);
     }
 
+    @PutMapping("customer/{customerId}/notifications")
+    public ResponseEntity<Void> updateAllNotificationsForCustomer(@PathVariable long customerId) throws CustomerNotFoundException {
+        customerService.updateAllNotificationsForCustomer(customerId);
+
+        log.info("All notifications for customer with id {} updated", customerId);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("customer/{customerId}/leave/{cribId}")
     public ResponseEntity<Void> leaveCrib(@PathVariable Long cribId, @PathVariable Long customerId)
             throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
