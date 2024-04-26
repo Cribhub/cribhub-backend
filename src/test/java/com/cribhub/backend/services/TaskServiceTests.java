@@ -2,6 +2,7 @@ package com.cribhub.backend.services;
 
 import com.cribhub.backend.domain.Crib;
 import com.cribhub.backend.domain.Customer;
+import com.cribhub.backend.domain.Notification;
 import com.cribhub.backend.domain.Task;
 import com.cribhub.backend.repositories.CribRepository;
 import com.cribhub.backend.repositories.CustomerRepository;
@@ -13,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,10 +47,13 @@ public class TaskServiceTests {
         Crib crib = new Crib();
         Customer customer = new Customer();
         Task task = new Task();
+        Notification notification = new Notification();
+        customer.setNotifications(new ArrayList<>());
 
         when(cribRepository.findById(1L)).thenReturn(Optional.of(crib));
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(taskRepository.save(task)).thenReturn(task);
+        when(notificationRepostitory.save(notification)).thenReturn(notification);
 
         //when(notificationRepostitory.save(any())).thenReturn(new Task().getDescription());
 
