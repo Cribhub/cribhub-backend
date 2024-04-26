@@ -80,4 +80,14 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("customer/{customerId}/leave/{cribId}")
+    public ResponseEntity<Void> leaveCrib(@PathVariable Long cribId, @PathVariable Long customerId)
+            throws CustomerNotFoundException, CribNotFoundException, CribNameAlreadyTakenException {
+
+        cribService.removeMember(cribId, customerId);
+
+        log.info("Customer with id {} left crib with id {}", customerId, cribId);
+        return ResponseEntity.ok().build();
+    }
+
 }

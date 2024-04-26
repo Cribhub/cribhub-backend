@@ -17,6 +17,8 @@ public interface CribService {
 
     void addMember(Long cribId, Long customerId) throws CribNotFoundException, CustomerNotFoundException;
 
+    void removeMember(Long cribId, Long customerId) throws CribNotFoundException, CustomerNotFoundException;
+
     List<Customer> getMembers(Long cribId) throws CribNotFoundException;
 
     List<Crib> getAllCribs();
