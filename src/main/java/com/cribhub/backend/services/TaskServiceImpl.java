@@ -43,7 +43,7 @@ public class TaskServiceImpl implements TaskService {
 
         Notification notification = new Notification();
         notification.setCustomer(customer);
-        notification.setName("Task created: " + task.getTitle());
+        notification.setName("You have been assigned to task: " + task.getTitle());
         notification.setDescription(task.getDescription());
         notificationRepostitory.save(notification);
 
